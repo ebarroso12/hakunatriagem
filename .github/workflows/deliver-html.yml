@@ -17,6 +17,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - name: Preparar Chromium para teste com dados sintéticos
+        run: npx playwright install --with-deps chromium
+      - name: Testar HTML real offline em Chromium
+        run: |
+          export CHROMIUM_PATH="$(node --input-type=module -e "import {chromium} from '@playwright/test'; process.stdout.write(chromium.executablePath())")"
+          node tests/browser-file.mjs
       - name: Publicar somente o HTML testado como arquivo de download
         env:
           GH_TOKEN: ${{ github.token }}
@@ -25,5 +31,5 @@ jobs:
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" dist/Triagem-Hakunas-Corrigida.html --clobber --repo "$GITHUB_REPOSITORY"
           else
-            gh release create "$tag" dist/Triagem-Hakunas-Corrigida.html --target "$GITHUB_SHA" --title 'Triagem Hakunas — HTML offline corrigido' --notes 'Arquivo HTML único e autocontido. Inclui correção de vermelho para 16–17 anos. Gerado e aprovado pela suíte automatizada. E2E real por file:// continua bloqueado no ambiente anterior; sem homologação em aparelho físico. Nenhum dado pessoal está incluído.' --latest --repo "$GITHUB_REPOSITORY"
+            gh release create "$tag" dist/Triagem-Hakunas-Corrigida.html --target "$GITHUB_SHA" --title 'Triagem Hakunas — HTML offline corrigido' --notes 'Arquivo HTML único e autocontido. Inclui conferência automática local de CPF/telefone, prévia automática e avisos agrupados. Gerado após testes automatizados e E2E real em Chromium por file:// com rede desativada no runner de CI; sem homologação em aparelho físico. Nenhum dado pessoal está incluído.' --latest --repo "$GITHUB_REPOSITORY"
           fi

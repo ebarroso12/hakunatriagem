@@ -1,14 +1,14 @@
 # Triagem Hakunas — HTML offline
 
-Versão 1.1.0. Aplicativo local para organizar participantes e apoiar a revisão profissional nas atividades Legendários Hakunas.
+Versão 1.2.0. Aplicativo local para organizar participantes e apoiar a revisão profissional nas atividades Legendários Hakunas.
 
 ## Baixar e usar sem internet
 
-**[Baixar o HTML corrigido](https://triagem-hakunas.ebarroso12.chatgpt.site/baixar-corrigida.html)**
+**[Baixar o HTML corrigido](https://github.com/ebarroso12/hakunatriagem/releases/latest/download/Triagem-Hakunas-Corrigida.html)**
 
 Na página, clique em **Baixar HTML completo**. Guarde `Triagem-Hakunas-Offline.html` e abra o arquivo em um navegador atualizado. Depois de salvo, o aplicativo não depende do site, de login, servidor, CDN ou internet para operar. O HTML contém interface, marca, leitores, worker PDF, núcleo WASM e idiomas português/inglês do OCR. Tamanho aproximado: 12 MB.
 
-O site serve como canal de distribuição. A execução local é a entrega principal. O HTML standalone inclui uma política CSP que impede conexões HTTP(S) e não registra service worker. Links externos de fontes são opcionais e exigem conexão se forem abertos.
+O download em GitHub Releases entrega o arquivo como anexo, sem depender do acesso ao Site privado. O site é um canal adicional de distribuição. A execução local é a entrega principal. O HTML standalone inclui uma política CSP que impede conexões HTTP(S) e não registra service worker. Links externos de fontes são opcionais e exigem conexão se forem abertos.
 
 ## Importação e localização dos campos
 
@@ -18,11 +18,11 @@ O site serve como canal de distribuição. A execução local é a entrega princ
 - PDF com texto: extração local e ordenação por coordenadas; páginas sem texto exigem a opção **OCR local**.
 - Imagens `.png`, `.jpg`, `.jpeg`, `.webp`, `.bmp`, `.gif`: OCR local português/inglês, sem download de idiomas ou núcleo durante o uso. GIF usa a imagem decodificada pelo navegador.
 
-A detecção examina as abas e linhas para localizar cabeçalhos deslocados, ordens de colunas diferentes, tabelas transpostas, tabelas lado a lado e blocos repetidos de campos/valores. A prévia mostra estruturas, posições, contagens e os primeiros registros. A pessoa seleciona os blocos, confere a prévia e confirma a inclusão.
+A detecção examina as abas e linhas para localizar cabeçalhos deslocados, ordens de colunas diferentes, tabelas transpostas, tabelas lado a lado e blocos repetidos de campos/valores. Quando há uma única estrutura detectada, a prévia abre automaticamente; com múltiplos blocos, mantém a seleção humana. A prévia mostra estruturas, posições, contagens e os primeiros registros. Avisos repetidos são agrupados em detalhes recolhidos e a confirmação cabe em telas estreitas. A pessoa seleciona os blocos, confere a prévia e confirma a inclusão.
 
 Há mapeamento manual de aba, cabeçalho, intervalo e colunas, além de edição do texto extraído antes de reanalisar. Valores conflitantes ou inválidos bloqueiam o conjunto. Campos não vazios sem correspondência também ficam preservados na ficha, com rótulo, valor e posição de origem. As posições em PDF/texto são as da representação extraída, não coordenadas físicas de Excel.
 
-Respostas explícitas Sim/Não a fatores clínicos identificados podem alimentar alertas. Texto livre não vira diagnóstico; seções não se tornam revisadas automaticamente. Avisos de OCR, unidades ou respostas ambíguas precisam de conferência no original. Não há deduplicação automática de pessoas em blocos ou abas diferentes.
+CPF e telefone são conferidos localmente: CPF por comprimento/dígitos verificadores; telefone por estrutura/DDD ou formato internacional explícito. Isso não consulta titularidade, cadastro oficial ou existência do número. Números completos não geram alerta só por serem numéricos; máscaras explícitas e números inteiros seguros armazenados são preservados, inclusive quando a exibição é científica. Não se inventam zeros, DDD ou dígitos ausentes. Respostas explícitas Sim/Não a fatores clínicos identificados podem alimentar alertas. Texto livre não vira diagnóstico; seções não se tornam revisadas automaticamente. Avisos de OCR, unidades ou respostas ambíguas precisam de conferência no original. Não há deduplicação automática de pessoas em blocos ou abas diferentes.
 
 **Não existe garantia de reconhecimento de qualquer arquivo ou de exatidão do OCR.** DOC binário antigo, HEIC, TIFF, formatos proprietários, arquivos protegidos e certas estruturas complexas exigem conversão local ou entrada manual. Alguns PDFs com codificações/fontes/imagens especiais podem não ser legíveis. Arquivos muito grandes são recusados com mensagem. Não há interpretação clínica de texto livre nem liberação automática de participantes.
 
@@ -40,7 +40,7 @@ Impressão/PDF usa o navegador; CSV é resumo legível, neutraliza fórmulas e p
 
 ## Verificação desta entrega
 
-**64 testes aprovados**, build concluído. A entrega desta correção foi solicitada após a manutenção local; veja `docs/STATUS.md`, `TODO.md`, `docs/EVIDENCIAS.md` e `docs/ENTREGA.md`. Incluem regras, exclusões, dados intermediários inválidos, menores, unidades, layout em diversas posições, múltiplas abas/blocos, DOCX/ODT/HTML/XML/JSON, coordenadas PDF, proveniência, ZIP, backup, XSS e CSV.
+**75 testes aprovados**, build concluído. A entrega desta correção foi solicitada após a manutenção local; veja `docs/STATUS.md`, `TODO.md`, `docs/EVIDENCIAS.md` e `docs/ENTREGA.md`. Incluem regras, exclusões, dados intermediários inválidos, menores, unidades, layout em diversas posições, múltiplas abas/blocos, DOCX/ODT/HTML/XML/JSON, coordenadas PDF, proveniência, ZIP, backup, XSS e CSV.
 
 O worker OCR incorporado foi executado em contexto JS isolado, com WASM e idiomas embutidos, e reconheceu uma imagem sintética sem acesso à rede. PDF real sintético foi lido pelo motor incluído. O HTML final foi executado em DOM simulado (`file:`), com rede proibida, verificando cadastro, impressão, importação, campos extras e backup.
 

@@ -24,3 +24,11 @@ A revisão de falhas de ambiguidade/rejeição atômica está na fila como item 
 10 MiB por arquivo; ZIP até 30 MiB efetivamente expandidos e 20.000 entradas; até 200 abas e 50.000 linhas totais; 10.001 linhas/256 colunas por tabela; 5.000 participantes; 2.000 caracteres por campo. PDF até 50 páginas, OCR PDF até 10, texto extraído até 2 MiB, imagem até 25 megapixels. Backup até 32 MiB antes de criptografar.
 
 Verificar limites com fixtures sintéticas. Não incluir documentos pessoais, nomes, telefones ou condições clínicas reais em capturas, logs, fixtures ou commits.
+
+## Atualização 1.2 — identificadores e prévia automática
+
+Conferência de CPF/telefone roda no próprio JavaScript do HTML, sem consulta externa. CPF com 11 dígitos e checksum correto e telefone estruturalmente íntegro não recebem aviso genérico apenas por tipo numérico. Isso não comprova titularidade/existência. Dígitos ausentes/invalidade de checksum/DDD e precisão numérica incerta geram aviso específico; nada é completado por suposição.
+
+O leitor conserva metadados de valor numérico e máscara. A exibição científica pode ser normalizada a partir do valor inteiro exato e seguro armazenado; o texto exibido original continua na origem da ficha. Uma máscara explícita pode preservar zeros que ainda existem na formatação. Zeros realmente perdidos sem evidência não são reconstruídos.
+
+Uma estrutura detectada abre a prévia automaticamente, sem incluir registros. Múltiplas estruturas mantêm seleção explícita. A confirmação continua necessária; alertas de dados e revisão clínica não se tornam conferidos automaticamente. Avisos são agrupados/recolhidos e detalhes completos permanecem nas fichas. A tabela de prévia e o botão de confirmação têm layout móvel próprio.
