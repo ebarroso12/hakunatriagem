@@ -1,0 +1,12 @@
+import {build} from 'esbuild';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+await mkdir('dist',{recursive:true});
+await build({entryPoints:['src/app.js'],bundle:true,minify:true,outfile:'dist/app.js',loader:{'.css':'css'}});
+let html=await readFile('index.html','utf8'),js=await readFile('dist/app.js','utf8'),css=await readFile('dist/app.css','utf8');
+html=html.replace('<script type="module" src="/src/app.js"></script>',()=>`<script>${js.replaceAll('</script','<\\/script')}</script>`).replace('</head>',()=>`<style>${css}</style></head>`);
+await writeFile('dist/index.html',html);
+await writeFile('dist/triagem-hakunas.htm',html.replace('<link rel="manifest" href="./manifest.webmanifest">','').replace('<link rel="icon" href="./icon.svg">',''));
+await writeFile('dist/icon.svg','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#263d30"/><path d="M34 145 75 65l25 45 20-29 40 64z" fill="#f36c32"/><text x="96" y="63" text-anchor="middle" fill="white" font-family="sans-serif" font-size="32" font-weight="bold">H</text></svg>');
+await writeFile('dist/manifest.webmanifest',JSON.stringify({name:'Triagem Hakunas',short_name:'Hakunas',lang:'pt-BR',start_url:'./',scope:'./',display:'standalone',background_color:'#f5f6f2',theme_color:'#263d30',icons:[{src:'icon.svg',sizes:'any',type:'image/svg+xml',purpose:'any'}]}));
+await writeFile('dist/sw.js',`const CACHE='hakunas-v1';self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./','./index.html','./icon.svg','./manifest.webmanifest'])));});self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));self.addEventListener('fetch',e=>{if(e.request.method==='GET'&&new URL(e.request.url).origin===self.location.origin)e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));});`);
+console.log('Build concluído: dist/index.html e dist/triagem-hakunas.htm');
