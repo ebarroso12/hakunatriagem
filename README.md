@@ -1,62 +1,75 @@
-# Triagem Hakunas
+# Triagem Hakunas — HTML offline
 
-Aplicativo web local para cadastro de participantes e apoio à revisão profissional nas atividades Legendários Hakunas. Interface responsiva em português, com marca extraída do manual fornecido pelo responsável.
+Versão 1.1.0. Aplicativo local para organizar participantes e apoiar a revisão profissional nas atividades Legendários Hakunas.
 
-## Abrir o aplicativo
+## Baixar e usar sem internet
 
-Baixe [`app/triagem-hakunas.htm`](app/triagem-hakunas.htm) usando **Download raw file** no GitHub e abra em um navegador atualizado. O HTML contém estilos, código, marca e biblioteca de planilhas. Não usa CDN em execução.
+**[Baixar o HTML completo](https://triagem-hakunas.ebarroso12.chatgpt.site/baixar.html)**
 
-Para hospedagem HTTPS/PWA, execute `npm ci` e `npm run build`, depois sirva a pasta `dist/`. Não há publicação externa automática. O workflow de CI oferece um artefato de build para download.
+Na página, clique em **Baixar HTML completo**. Guarde `Triagem-Hakunas-Offline.html` e abra o arquivo em um navegador atualizado. Depois de salvo, o aplicativo não depende do site, de login, servidor, CDN ou internet para operar. O HTML contém interface, marca, leitores, worker PDF, núcleo WASM e idiomas português/inglês do OCR. Tamanho aproximado: 12 MB.
 
-## Funcionalidades
+O site serve como canal de distribuição. A execução local é a entrega principal. O HTML standalone inclui uma política CSP que impede conexões HTTP(S) e não registra service worker. Links externos de fontes são opcionais e exigem conexão se forem abertos.
 
-- Cadastro, edição, exclusão, busca, filtros e paginação (50 por página; até 5.000 registros).
-- Importação local de Excel, ODS, CSV/TSV e tabelas HTML, com aba/cabeçalho selecionáveis, mapeamento e confirmação de prévia. Valores inválidos bloqueiam o conjunto antes de inserir registros.
-- Preservação de textos clínicos, sem inferência automática de diagnósticos; revisão explícita por seção.
-- Score do manual Hakunas separado das cores operacionais provisórias; exclusões independentes; faixa final interna bloqueada por pendências. Não autoriza participação.
-- Registro de idades 16–17 sem classificação ou IMC adultos; normalização de altura em metros/centímetros.
-- Calculadoras independentes de IMC e TFGe CKD-EPI 2021.
-- Impressão/PDF, CSV com neutralização de fórmulas e confirmação antes de gerar arquivo legível.
-- Backup .LGND AES-GCM-256 / PBKDF2-SHA256 (310.000 iterações), com validação antes de restaurar e confirmação antes de substituir a sessão.
-- Configurações da operação e registro de referências com responsável, preservados no backup.
+## Importação e localização dos campos
 
-## Dados e segurança operacional
+- Excel `.xlsx`, `.xls`, `.xlsm`, `.xlsb` e OpenDocument `.ods`.
+- CSV, TSV, TXT, tabelas HTML, XML e JSON com registros identificáveis.
+- Word OOXML `.docx`, `.docm`, `.dotx`, OpenDocument `.odt`: tabelas e parágrafos com rótulos.
+- PDF com texto: extração local e ordenação por coordenadas; páginas sem texto exigem a opção **OCR local**.
+- Imagens `.png`, `.jpg`, `.jpeg`, `.webp`, `.bmp`, `.gif`: OCR local português/inglês, sem download de idiomas ou núcleo durante o uso. GIF usa a imagem decodificada pelo navegador.
 
-Os participantes ficam **apenas na memória da aba**. Atualizar ou fechar pode apagar os dados. **Salvar avaliação** grava na sessão; **Salvar backup** gera o arquivo para retenção. Não há login, banco, sincronização, telemetria ou envio automático. O backup tem senha com no mínimo 10 caracteres; não há recuperação de senha. Confirme o download antes de sair.
+A detecção examina as abas e linhas para localizar cabeçalhos deslocados, ordens de colunas diferentes, tabelas transpostas, tabelas lado a lado e blocos repetidos de campos/valores. A prévia mostra estruturas, posições, contagens e os primeiros registros. A pessoa seleciona os blocos, confere a prévia e confirma a inclusão.
 
-Planilhas e documentos com dados pessoais fornecidos na conversa não estão neste repositório. Nenhum participante real está pré-carregado.
+Há mapeamento manual de aba, cabeçalho, intervalo e colunas, além de edição do texto extraído antes de reanalisar. Valores conflitantes ou inválidos bloqueiam o conjunto. Campos não vazios sem correspondência também ficam preservados na ficha, com rótulo, valor e posição de origem. As posições em PDF/texto são as da representação extraída, não coordenadas físicas de Excel.
 
-## Critérios e limites
+Respostas explícitas Sim/Não a fatores clínicos identificados podem alimentar alertas. Texto livre não vira diagnóstico; seções não se tornam revisadas automaticamente. Avisos de OCR, unidades ou respostas ambíguas precisam de conferência no original. Não há deduplicação automática de pessoas em blocos ou abas diferentes.
 
-O score foi transcrito do manual Hakunas, versão 1.0, com data de 07/12/2025. As cores vêm do relatório consolidado de 10/11/2026 e são exibidas como provisórias. O app mantém a divergência de critério para implantes como pendência e não inventa regra de cor baseada apenas em menoridade.
+**Não existe garantia de reconhecimento de qualquer arquivo ou de exatidão do OCR.** DOC binário antigo, HEIC, TIFF, formatos proprietários, arquivos protegidos e certas estruturas complexas exigem conversão local ou entrada manual. Alguns PDFs com codificações/fontes/imagens especiais podem não ser legíveis. Arquivos muito grandes são recusados com mensagem. Não há interpretação clínica de texto livre nem liberação automática de participantes.
 
-Esta implementação foi criada a partir das referências; não é uma recuperação do código ou dos 169 testes citados no relatório anterior. Nesta entrega: **28 testes unitários aprovados**, build aprovado e ensaio Chromium via HTTP local em 320/390 px e desktop. Testados cadastro, normalização, menoridade, backup/restauração, calculadora e prévia da planilha fornecida (16 colunas reconhecidas). O acesso `file://` está bloqueado pela política do ambiente de teste; a abertura direta do HTM precisa ser conferida no dispositivo de destino. Não houve teste em telefone físico ou impressora.
+## Fichas, triagem e retenção
 
-Não há nesta versão: interface em inglês, Framingham, KFRE, rastreio ACSM, extração PDF/DOCX/OCR, anexação de documentos, critérios clínicos editáveis ou integração Drive/OneDrive. O registro de referências não arquiva documentos nem modifica o motor. O PAR-Q+ não foi reproduzido.
+Cadastro, edição, exclusão, busca e filtros; páginas de 50 e até 5.000 participantes. A ficha inclui medidas, contato, condições informadas, fatores estruturados, seções revisadas, documentação e responsável. Campos de origem e avisos são preservados na edição, impressão e backup.
 
-Não houve homologação clínica ou regulatória. O sistema não diagnostica, prescreve ou libera esforço físico. Critérios de exclusão exigem avaliação profissional mesmo com pontuação baixa.
+O score vem do manual Hakunas, versão 1.0, datado de 07/12/2025. As cores operacionais vêm do relatório consolidado de 10/11/2026 e são provisórias, separadas da pontuação. Exclusões são independentes da soma. A faixa interna final exige dados válidos, seções revisadas, preparo informado, documentos conferidos, responsável e avisos de importação conferidos. Menores de 18 não recebem IMC/faixa adulta; nenhuma cor por menoridade isolada foi inventada. Implantes mantêm a divergência de critério como pendência.
 
-Limites: arquivo de importação até 10 MiB; ZIP até 30 MiB declarados e 20.000 entradas; 10.001 linhas, 256 colunas; texto de ficha até 2.000 caracteres por campo; backup até 32 MiB antes de criptografar. CSV é resumo e não substitui o backup.
+Calculadoras independentes: IMC e TFGe CKD-EPI 2021. Não alteram fichas automaticamente. Esta versão não inclui Framingham, KFRE, rastreio ACSM, interface em inglês ou critérios clínicos editáveis. O registro de referências não arquiva documentos nem modifica o motor. PAR-Q+ não foi reproduzido.
+
+**Salvar avaliação** mantém dados apenas na memória da aba. Atualizar/fechar pode apagá-los. **Salvar backup** gera `.LGND` AES-GCM-256 / PBKDF2-SHA256, 310.000 iterações, salt/IV aleatórios. A senha precisa de 10 caracteres, não é armazenada e não pode ser recuperada. Confira o download antes de sair. Restauração valida schema, IDs, tipos, campos e limites antes de pedir confirmação para substituir a sessão.
+
+Impressão/PDF usa o navegador; CSV é resumo legível, neutraliza fórmulas e pede confirmação. Não há banco, login clínico, sincronização, telemetria, OAuth ou envio automático. Nenhum dado pessoal dos anexos foi incluído no repositório ou no HTML.
+
+## Verificação desta entrega
+
+**53 testes aprovados**, build concluído. Incluem regras, exclusões, dados intermediários inválidos, menores, unidades, layout em diversas posições, múltiplas abas/blocos, DOCX/ODT/HTML/XML/JSON, coordenadas PDF, proveniência, ZIP, backup, XSS e CSV.
+
+O worker OCR incorporado foi executado em contexto JS isolado, com WASM e idiomas embutidos, e reconheceu uma imagem sintética sem acesso à rede. PDF real sintético foi lido pelo motor incluído. O HTML final foi executado em DOM simulado (`file:`), com rede proibida, verificando cadastro, impressão, importação, campos extras e backup.
+
+A planilha fornecida foi lida localmente: 100 registros em uma estrutura, 16 campos reconhecidos. Somente contagens foram registradas; dados reais não foram inseridos em testes versionados.
+
+**Limite de verificação:** nesta atualização não houve ensaio em navegador real, telefone físico, modo avião de um dispositivo ou impressora. O ambiente gerenciado não oferece a rota de navegador prevista para essa verificação; a execução DOM simulada não equivale à homologação em Safari/Chrome ou em todos os aparelhos. A versão anterior teve ensaio Chromium em 320/390 px. Abra o HTML salvo e confira a operação no navegador de destino antes do uso real.
+
+O sistema não foi homologado clínica ou regulatoriamente, não diagnostica, prescreve ou libera esforço físico. Julgamento profissional e validação do protocolo continuam necessários.
+
+## Limites
+
+Arquivo até 10 MiB; ZIP até 30 MiB realmente expandidos e 20.000 entradas; até 200 abas/50.000 linhas totais; 10.001 linhas e 256 colunas por tabela; 5.000 participantes; 2.000 caracteres por campo. PDF até 50 páginas; OCR de PDF até 10 páginas; texto extraído até 2 MiB; imagem até 25 megapixels. Backup até 32 MiB antes da criptografia. CSV não substitui backup.
 
 ## Desenvolvimento
 
-Requer Node.js 22+.
+Node.js 22+. A instalação das dependências requer rede apenas na preparação do projeto.
 
 ```sh
 npm ci
 npm test
-npm run build
 npm run dev
 ```
 
-Ensaio de navegador (requer Chromium):
+`npm test` prepara os runtimes, gera os HTMLs e executa os testes. Para gerar novamente sem testes: `npm run build`.
 
-```sh
-CHROMIUM_PATH=/usr/bin/chromium node tests/browser.mjs
-```
+Arquivos gerados: `dist/triagem-hakunas-offline.html` e `dist/triagem-hakunas.htm` (autocontidos), `dist/index.html` (versão hospedável), `dist/baixar.html` (página de download). `src/generated-runtimes.js` é gerado a partir das dependências e ignorado pelo Git.
 
-Opcionalmente defina `HAKUNAS_TEST_WORKBOOK` para testar uma planilha local. A suíte registra somente contagens; não confirma a importação de dados reais nem salva capturas com esses registros. Resultados e backups sintéticos ficam em `test-results/` (ignorado pelo Git).
+A CI oferece `dist/` como artefato de build. O HTML é um arquivo único dentro da saída; nenhum ZIP é necessário para executá-lo. Os antigos artefatos `app/` da versão 1.0 foram retirados para evitar download da versão desatualizada.
 
-## Estrutura
+`tests/browser.mjs` permanece disponível para ambientes com Chromium e autorização para execução do ensaio. Use `CHROMIUM_PATH` e, opcionalmente, `HAKUNAS_TEST_WORKBOOK` (planilha local); não publica dados. `test-results/` é ignorado.
 
-`src/core.js`: validação e regras. `src/importer.js`: leitura e mapeamento. `src/vault.js`: criptografia. `src/app.js`: interface e sessão. `scripts/build.mjs`: HTML autocontido e PWA. `tests/`: testes.
+Módulos: `core.js` (validação/regras), `layouts.js` (detecção e proveniência), `documents.js` (documentos/texto), `importer.js` (formatos), `pdf.js`, `ocr.js`, `vault.js`, `app.js`. O build incorpora bibliotecas; não depende de CDNs em execução.

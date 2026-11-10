@@ -34,9 +34,9 @@ if(process.env.HAKUNAS_TEST_WORKBOOK){
 await page.getByRole('button',{name:'Importar lista'}).click();
 // The real workbook remains outside the repository; assert counts only, never log personal fields.
 await page.locator('#import-file').setInputFiles(process.env.HAKUNAS_TEST_WORKBOOK);await page.locator('#make-preview').waitFor();
-const mapped=await page.locator('[data-map]').evaluateAll(es=>es.filter(e=>e.value).length);
+const structures=await page.locator('[data-layout]').count();
 await page.locator('#make-preview').click();
-const available=await page.locator('#confirm-import').count();console.log(JSON.stringify({mapped,previewAvailable:available,validationError:!!(await page.locator('#import-error').innerText())}));assert.equal(available,1);
+const available=await page.locator('#confirm-import').count();console.log(JSON.stringify({structures,previewAvailable:available,validationError:!!(await page.locator('#import-error').innerText())}));assert.equal(available,1);
 await page.locator('#close-modal').click();
 }
 for(const width of [390,320]){await page.setViewportSize({width,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No page overflow at '+width);await page.getByRole('button',{name:'Abrir ficha'}).click();assert.ok(await page.evaluate(()=>document.querySelector('#modal').scrollWidth<=document.querySelector('#modal').clientWidth),'No dialog overflow at '+width);await page.locator('#close-modal').click();}

@@ -1,0 +1,5 @@
+import {createWorker} from 'tesseract.js';
+import {ocrWorkerSource} from './generated-runtimes.js';
+let worker=null,workerURL=null,progressCallback=()=>{};
+export async function recognizeImage(image,onProgress=()=>{}){progressCallback=onProgress;if(!worker){if(!globalThis.Worker||!globalThis.WebAssembly)throw Error('Este navegador não oferece Worker/WebAssembly para OCR offline. Use texto ou planilha.');workerURL=URL.createObjectURL(new Blob([ocrWorkerSource],{type:'text/javascript'}));try{worker=await createWorker('por+eng',1,{workerPath:workerURL,workerBlobURL:false,corePath:'embedded.js',langPath:'embedded:',cacheMethod:'none',logger:m=>progressCallback('OCR local: '+Math.round((m.progress||0)*100)+'% — '+m.status),errorHandler:()=>{}});}catch(e){await stopOCR();throw Error('Não foi possível iniciar o OCR local neste navegador. '+e.message);}}try{const r=await worker.recognize(image,{}, {text:true});return {text:r.data.text,confidence:r.data.confidence};}catch(e){throw Error('Falha no OCR local: '+e.message);}}
+export async function stopOCR(){if(worker){await worker.terminate();worker=null;}if(workerURL){URL.revokeObjectURL(workerURL);workerURL=null;}}

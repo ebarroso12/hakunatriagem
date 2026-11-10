@@ -20,3 +20,5 @@ test('Backup roundtrip, senha errada e adulteração',async()=>{let data={schema
 test('Backup valida IDs, faixas e limite textual',()=>{let p=base();assert.equal(validateBackup({schema:2,participants:[p]}).length,1);assert.throws(()=>validateBackup({schema:2,participants:[p,p]}));assert.throws(()=>validateBackup({schema:2,participants:[{...p,age:'10'}]}));assert.throws(()=>validate({...p,notes:'x'.repeat(2001)}));});
 
 test('Restore rejeita ID com HTML e tipos indevidos',()=>{assert.throws(()=>validate({...base(),id:'\" onclick=alert(1)'}));assert.throws(()=>validate({...base(),certificate:'true'}));assert.throws(()=>validate({...base(),reviewer:123}));});
+
+test('Valores intermediários inválidos não exibem faixa final',()=>{for(const patch of[{age:'40.5'},{weight:'abc'},{height:'999'},{weight:'500'}])assert.equal(evaluate({...base(),...patch}).band,null);});
