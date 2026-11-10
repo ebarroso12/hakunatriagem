@@ -1,0 +1,29 @@
+name: Entregar HTML baixável
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/deliver-html.yml]
+permissions:
+  contents: write
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Publicar somente o HTML testado como arquivo de download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="html-${GITHUB_SHA:0:12}"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" dist/Triagem-Hakunas-Corrigida.html --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$tag" dist/Triagem-Hakunas-Corrigida.html --target "$GITHUB_SHA" --title 'Triagem Hakunas — HTML offline corrigido' --notes 'Arquivo HTML único e autocontido. Inclui correção de vermelho para 16–17 anos. Gerado e aprovado pela suíte automatizada. E2E real por file:// continua bloqueado no ambiente anterior; sem homologação em aparelho físico. Nenhum dado pessoal está incluído.' --latest --repo "$GITHUB_REPOSITORY"
+          fi

@@ -22,3 +22,12 @@ test('Backup valida IDs, faixas e limite textual',()=>{let p=base();assert.equal
 test('Restore rejeita ID com HTML e tipos indevidos',()=>{assert.throws(()=>validate({...base(),id:'\" onclick=alert(1)'}));assert.throws(()=>validate({...base(),certificate:'true'}));assert.throws(()=>validate({...base(),reviewer:123}));});
 
 test('Valores intermediários inválidos não exibem faixa final',()=>{for(const patch of[{age:'40.5'},{weight:'abc'},{height:'999'},{weight:'500'}])assert.equal(evaluate({...base(),...patch}).band,null);});
+
+for(const age of ['16','17']){
+  test('Menor isolado recebe vermelho pela idade '+age,()=>{const r=evaluate({...base(),age});assert.equal(r.color,'red');assert.ok(r.reasons.some(reason=>/16.*17/.test(reason)));assert.equal(r.bmi,null);assert.equal(r.band,null);assert.equal(r.score,0);});
+  test('Menor com fator amarelo continua vermelho '+age,()=>{const r=evaluate({...base(),age,flags:['bpmed']});assert.equal(r.color,'red');assert.equal(r.score,1);assert.equal(r.band,null);});
+  test('Menor e doença vermelha não viram preto '+age,()=>assert.equal(evaluate({...base(),age,flags:['htn','disease']}).color,'red'));
+  test('Menor com critério preto explícito recebe preto '+age,()=>{const r=evaluate({...base(),age,flags:['seizure']});assert.equal(r.color,'black');assert.equal(r.band,null);assert.equal(r.bmi,null);});
+  test('Menor e implante continuam vermelhos e pendentes '+age,()=>{const r=evaluate({...base(),age,flags:['implant']});assert.equal(r.color,'red');assert.ok(r.pending.some(x=>x.includes('implante')));assert.equal(r.band,null);});
+}
+test('Regra etária vermelha termina em 18 e não aceita idade fracionária',()=>{assert.equal(evaluate({...base(),age:'18'}).color,'green');const invalid=evaluate({...base(),age:'17.5'});assert.equal(invalid.band,null);assert.ok(invalid.pending.some(x=>x.includes('Corrigir dados')));assert.ok(!invalid.reasons.some(reason=>/16.*17/.test(reason)));});

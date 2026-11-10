@@ -4,7 +4,7 @@ Versão 1.1.0. Aplicativo local para organizar participantes e apoiar a revisão
 
 ## Baixar e usar sem internet
 
-**[Baixar o HTML completo](https://triagem-hakunas.ebarroso12.chatgpt.site/baixar.html)**
+**[Baixar o HTML corrigido](https://triagem-hakunas.ebarroso12.chatgpt.site/baixar-corrigida.html)**
 
 Na página, clique em **Baixar HTML completo**. Guarde `Triagem-Hakunas-Offline.html` e abra o arquivo em um navegador atualizado. Depois de salvo, o aplicativo não depende do site, de login, servidor, CDN ou internet para operar. O HTML contém interface, marca, leitores, worker PDF, núcleo WASM e idiomas português/inglês do OCR. Tamanho aproximado: 12 MB.
 
@@ -30,7 +30,7 @@ Respostas explícitas Sim/Não a fatores clínicos identificados podem alimentar
 
 Cadastro, edição, exclusão, busca e filtros; páginas de 50 e até 5.000 participantes. A ficha inclui medidas, contato, condições informadas, fatores estruturados, seções revisadas, documentação e responsável. Campos de origem e avisos são preservados na edição, impressão e backup.
 
-O score vem do manual Hakunas, versão 1.0, datado de 07/12/2025. As cores operacionais vêm do relatório consolidado de 10/11/2026 e são provisórias, separadas da pontuação. Exclusões são independentes da soma. A faixa interna final exige dados válidos, seções revisadas, preparo informado, documentos conferidos, responsável e avisos de importação conferidos. Menores de 18 não recebem IMC/faixa adulta; nenhuma cor por menoridade isolada foi inventada. Implantes mantêm a divergência de critério como pendência.
+O score vem do manual Hakunas, versão 1.0, datado de 07/12/2025. As cores operacionais vêm do relatório consolidado de 10/11/2026 e são provisórias, separadas da pontuação. Exclusões são independentes da soma. A faixa interna final exige dados válidos, seções revisadas, preparo informado, documentos conferidos, responsável e avisos de importação conferidos. Menores de 18 não recebem IMC/faixa adulta. Conforme instrução operacional explícita do responsável nesta manutenção, idades inteiras de 16–17 anos recebem vermelho; preto exige outro critério preto explícito. Esta regra etária vem da instrução do responsável, não de validação clínica externa. Implantes mantêm a divergência de critério como pendência.
 
 Calculadoras independentes: IMC e TFGe CKD-EPI 2021. Não alteram fichas automaticamente. Esta versão não inclui Framingham, KFRE, rastreio ACSM, interface em inglês ou critérios clínicos editáveis. O registro de referências não arquiva documentos nem modifica o motor. PAR-Q+ não foi reproduzido.
 
@@ -40,7 +40,7 @@ Impressão/PDF usa o navegador; CSV é resumo legível, neutraliza fórmulas e p
 
 ## Verificação desta entrega
 
-**53 testes aprovados**, build concluído. Incluem regras, exclusões, dados intermediários inválidos, menores, unidades, layout em diversas posições, múltiplas abas/blocos, DOCX/ODT/HTML/XML/JSON, coordenadas PDF, proveniência, ZIP, backup, XSS e CSV.
+**64 testes aprovados**, build concluído. A entrega desta correção foi solicitada após a manutenção local; veja `docs/STATUS.md`, `TODO.md`, `docs/EVIDENCIAS.md` e `docs/ENTREGA.md`. Incluem regras, exclusões, dados intermediários inválidos, menores, unidades, layout em diversas posições, múltiplas abas/blocos, DOCX/ODT/HTML/XML/JSON, coordenadas PDF, proveniência, ZIP, backup, XSS e CSV.
 
 O worker OCR incorporado foi executado em contexto JS isolado, com WASM e idiomas embutidos, e reconheceu uma imagem sintética sem acesso à rede. PDF real sintético foi lido pelo motor incluído. O HTML final foi executado em DOM simulado (`file:`), com rede proibida, verificando cadastro, impressão, importação, campos extras e backup.
 
