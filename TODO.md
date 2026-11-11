@@ -51,3 +51,17 @@ Um item de implementação por execução. Não instalar skills, commitar, envia
 - [x] 112 testes locais aprovados; build e diff --check aprovados.
 - [ ] E2E real da versão 1.4: navegação local bloqueada por política; execução remota depende de autorização.
 - [ ] Distribuir HTML 1.4 sem dados pessoais, após autorização de upload. Nenhum commit desta versão.
+
+- [x] Distribuição 1.4 autorizada, E2E remoto aprovado e download 200/attachment/hash conferidos (commit 0112c850ea4e). Itens de distribuição/E2E acima estão resolvidos por esta evidência posterior.
+- [ ] Revisar os avisos de dependências reportados por npm ci; homologar Android físico/content:// e impressão real.
+
+## Item 05 — exportar nos cinco formatos e escolher destino
+
+- [x] Reproduzir ausência de exportação e seletor com testes sintéticos antes da implementação.
+- [ ] Relatórios completos e faltantes em XLSX, CSV, ODS, PDF real e HTML.
+- [ ] Imprimir relatório em botão visível; ausências somente alertam por participante.
+- [ ] Seletor nativo de arquivo quando disponível; download/compartilhamento honesto no celular, sem upload clínico automático.
+- [ ] Testar formatos, escrita/cancelamento/erros, regressões e E2E offline; atualizar entrega autorizada.
+
+- [x] Implementação 1.5 dos cinco formatos/destinos/alertas e impressão concluída localmente; 124 testes, build e diff aprovados.
+- [ ] Publicação 1.5 e E2E remoto aguardam autorização específica após rejeição automática do upload da fonte livre. Link 1.4 não contém esta correção.

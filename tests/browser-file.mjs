@@ -88,16 +88,33 @@ try{
   assert.equal(await page.locator('[data-edit]').count(),1);
   await page.locator('#reports').click();
   assert.match(await page.locator('#modal').innerText(),/6 registro\(s\) da sessão inteira/);
-  await page.locator('#report-readable-consent').check();
+  assert.equal(await page.locator('#report-format option').count(),5);assert.match(await page.locator('#report-missing-alert').innerText(),/Nome não informado/);await page.locator('#report-destination').selectOption('download');await page.locator('#report-readable-consent').check();
   const completeReady=page.waitForEvent('download');await page.locator('#report-complete').click();
   const completeFile=await completeReady;await completeFile.saveAs('test-results/relatorio-completo-sintetico.html');
   const fullHTML=await readFile('test-results/relatorio-completo-sintetico.html','utf8');
   assert.equal((fullHTML.match(/<article class="record"/g)||[]).length,6);
   assert.match(fullHTML,/Nome não informado/);assert.match(fullHTML,/TOP 01782/);assert.match(fullHTML,/Base sintética/);assert.ok(completeFile.suggestedFilename().includes('TOP-01782'));
-  const missingReady=page.waitForEvent('download');await page.locator('#report-missing').click();
+  await page.locator('#report-format').selectOption('xlsx');const missingReady=page.waitForEvent('download');await page.locator('#report-missing').click();
   const missingFile=await missingReady;await missingFile.saveAs('test-results/dados-faltantes-sinteticos.xlsx');
   const missingWB=XLSX.read(await readFile('test-results/dados-faltantes-sinteticos.xlsx'),{type:'buffer'});
   assert.ok(XLSX.utils.sheet_to_json(missingWB.Sheets['Campos faltantes'],{header:1}).some(row=>row[2]==='Nome completo'));
+  for(const kind of ['complete','missing'])for(const format of ['xlsx','csv','ods','pdf','html']){
+    await page.locator('#report-format').selectOption(format);
+    const ready=page.waitForEvent('download');await page.locator('#report-'+kind).click();const downloaded=await ready;
+    assert.ok(downloaded.suggestedFilename().endsWith('.'+format));const path='test-results/export-'+kind+'.'+format;await downloaded.saveAs(path);const bytes=await readFile(path);
+    if(format==='pdf')assert.equal(bytes.subarray(0,5).toString(),'%PDF-');
+    if(['xlsx','ods'].includes(format)){const book=XLSX.read(bytes,{type:'buffer'});assert.ok(book.SheetNames.includes('Campos faltantes'));if(kind==='complete')assert.ok(book.SheetNames.includes('Participantes'));}
+    if(format==='csv')assert.match(bytes.toString(),/Nome não informado/);
+    await page.waitForFunction(()=>!document.querySelector('#report-complete').disabled);assert.equal(await page.locator('#report-error').innerText(),'');
+  }
+  // Interface do seletor é simulada: não equivale a homologação do diálogo do sistema.
+  await page.evaluate(()=>{window.__saved=[];window.showSaveFilePicker=async options=>({name:options.suggestedName,createWritable:async()=>({write:async blob=>{window.__saved.push({name:options.suggestedName,type:blob.type,size:blob.size});},close:async()=>{}})});});
+  await page.locator('#report-destination').selectOption('choose');await page.locator('#report-format').selectOption('ods');await page.locator('#report-complete').click();
+  await page.waitForFunction(()=>window.__saved.length===1&&!document.querySelector('#report-complete').disabled);assert.match(await page.locator('#report-status').innerText(),/Arquivo gravado/);assert.ok((await page.evaluate(()=>window.__saved[0].name)).endsWith('.ods'));
+  await page.evaluate(()=>{window.showSaveFilePicker=async()=>{throw new DOMException('Cancelado','AbortError');};});await page.locator('#report-complete').click();await page.waitForFunction(()=>document.querySelector('#report-status').textContent.includes('cancelada'));assert.equal(await page.evaluate(()=>window.__saved.length),1);
+  await context.addInitScript(()=>{window.print=()=>{window.__printRequested=true;};});
+  await page.locator('#report-print').click();await page.waitForFunction(()=>document.querySelector('#report-print-frame')?.contentWindow?.__printRequested);
+  const printFrame=page.frames().find(f=>f.url().startsWith('blob:'));assert.ok(printFrame);assert.equal(await printFrame.locator('article.record').count(),6);assert.equal(await printFrame.locator('[data-event-header]').count(),7);assert.match(await page.locator('#report-status').innerText(),/Impressão solicitada/);
   const reportPage=await context.newPage();reportPage.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});reportPage.on('pageerror',e=>errors.push(e.message));
   await reportPage.goto(pathToFileURL(resolve('test-results/relatorio-completo-sintetico.html')).href);
   assert.equal(await reportPage.locator('article.record').count(),6);assert.equal(await reportPage.locator('[data-event-header]').count(),7);await reportPage.evaluate(()=>document.fonts.ready);assert.ok(await reportPage.evaluate(()=>[...document.fonts].some(f=>f.family==='HakunasTop'&&f.status==='loaded')));
@@ -117,6 +134,6 @@ try{
   for(const width of [390,320]){await page.setViewportSize({width,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
   await page.screenshot({path:'test-results/file-mobile-sintetico.png',fullPage:true});
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
-  console.log('E2E file:// aprovado: cabeçalho de TOP e logos locais, fonte incorporada offline, cadastro, menor vermelho, CPF/telefone e prévia automática móvel offline, mapeamento, vazios e nomes ausentes, dois relatórios integrais offline, importação atômica, chamada de impressão/PDF headless, backup/restore e viewport 390/320. Somente dados sintéticos.');
+  console.log('E2E file:// aprovado: cabeçalho de TOP e logos locais, fonte incorporada offline, cadastro, menor vermelho, CPF/telefone e prévia automática móvel offline, mapeamento, vazios e nomes ausentes, dois relatórios nos cinco formatos offline, seletor/cancelamento simulados e impressão do relatório completo, importação atômica, chamada de impressão/PDF headless, backup/restore e viewport 390/320. Somente dados sintéticos.');
 }catch(e){console.error('E2E file:// NÃO CONCLUÍDO: '+e.message);process.exitCode=1;}
 finally{await context.close();await browser.close();}

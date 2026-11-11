@@ -10,3 +10,5 @@ await writeFile('src/generated-runtimes.js','export const pdfWorkerSource='+JSON
 
 const [topFont,topFontLicense]=await Promise.all([readFile('src/assets/Anton-Regular.ttf'),readFile('src/assets/Anton-OFL.txt','utf8')]);
 await writeFile('src/generated-header-assets.js','export const headerFontData='+JSON.stringify('data:font/ttf;base64,'+topFont.toString('base64'))+';\nexport const headerFontLicense='+JSON.stringify(topFontLicense)+';\n');
+const [pdfFont,pdfFontLicense]=await Promise.all([readFile('src/assets/NotoSans-Regular.ttf'),readFile('src/assets/NotoSans-OFL.txt','utf8')]);
+await writeFile('src/generated-pdf-assets.js','export const pdfFontData='+JSON.stringify(pdfFont.toString('base64'))+';\nexport const pdfFontLicense='+JSON.stringify(pdfFontLicense)+';\n');

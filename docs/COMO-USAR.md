@@ -36,3 +36,15 @@ Em Configuração, informe número do TOP, local e nome da base. Escolha o emble
 A fonte Anton está incorporada com licença SIL OFL 1.1 e funciona sem buscar fontes na internet. Ela se aproxima do estilo condensado da referência, sem reproduzir exatamente sua textura. O cabeçalho acompanha tela, impressão, relatório completo e backup. O Excel de faltantes inclui a identificação do TOP no resumo.
 
 Para outro evento, faça backup e use “Novo TOP”; a sessão só é limpa após confirmação explícita. A base e os emblemas são preservados; número e local precisam ser informados novamente. Mudar o número com participantes presentes exige confirmar a correção da identidade da sessão. Backups antigos sem cabeçalho são restaurados com TOP não informado.
+
+## Salvar e imprimir — versão 1.5
+
+Em Participantes, use “Salvar relatórios”. Escolha XLSX, CSV, ODS, PDF ou HTML e o destino; os botões de relatório completo e dados faltantes usam o formato escolhido. PDF é gerado diretamente no dispositivo; não é um HTML renomeado. O botão visível “Imprimir relatório” abre as opções de impressão, sem imprimir a página do aplicativo. O cabeçalho de TOP/base/emblemas aparece no PDF e HTML e no documento de impressão. Planilhas e CSV contêm TOP, local e base como dados; não têm composição gráfica de emblemas.
+
+Campos vazios aparecem como não informados e geram um alerta com participante e lista de campos. Não impedem salvar ou imprimir. Avaliação clínica parcial permanece parcial, sem completar dados por suposição. Erros de valores preenchidos continuam sujeitos à validação existente. O arquivo de faltantes é independente do relatório completo e também pode usar qualquer um dos cinco formatos.
+
+“Escolher pasta e nome” usa showSaveFilePicker quando disponível. Se o navegador não oferecer esse recurso, o app solicita download conforme as configurações do navegador e avisa que não controla a pasta. Ative “Perguntar onde salvar” no navegador, se existir. Erro ou cancelamento do seletor não dispara download escondido. Nome com extensão diferente da escolhida é recusado antes da escrita.
+
+No celular, “Compartilhar arquivo / escolher Drive” abre o compartilhamento do sistema quando suportado. Escolha o Drive, a conta e a pasta no próprio Drive; se ele não estiver disponível, baixe e use “Novo / Enviar arquivo” no aplicativo Drive. O app não autentica no Drive, não faz upload automático e não confirma sincronização. Sem internet, salvar localmente continua disponível; enviar/sincronizar no Drive depende dele e de conexão posterior. Compartilhar implica sua decisão de enviar o documento legível ao serviço escolhido.
+
+O backup criptografado .LGND continua separado e opcional para restauração; não é o formato dos relatórios. Os cinco formatos exportam dados para leitura e não restauram integralmente a sessão criptografada.

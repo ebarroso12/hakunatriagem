@@ -8,3 +8,4 @@ playwright-report/
 src/generated-runtimes.js
 
 src/generated-header-assets.js
+src/generated-pdf-assets.js
