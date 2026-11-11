@@ -58,10 +58,13 @@ Um item de implementação por execução. Não instalar skills, commitar, envia
 ## Item 05 — exportar nos cinco formatos e escolher destino
 
 - [x] Reproduzir ausência de exportação e seletor com testes sintéticos antes da implementação.
-- [ ] Relatórios completos e faltantes em XLSX, CSV, ODS, PDF real e HTML.
-- [ ] Imprimir relatório em botão visível; ausências somente alertam por participante.
-- [ ] Seletor nativo de arquivo quando disponível; download/compartilhamento honesto no celular, sem upload clínico automático.
-- [ ] Testar formatos, escrita/cancelamento/erros, regressões e E2E offline; atualizar entrega autorizada.
+- [x] Relatórios completos e faltantes em XLSX, CSV, ODS, PDF real e HTML.
+- [x] Imprimir relatório em botão visível; ausências somente alertam por participante.
+- [x] Seletor nativo de arquivo quando disponível; download/compartilhamento honesto no celular, sem upload clínico automático.
+- [x] Testar formatos, escrita/cancelamento/erros, regressões e E2E offline; atualizar entrega autorizada.
 
 - [x] Implementação 1.5 dos cinco formatos/destinos/alertas e impressão concluída localmente; 124 testes, build e diff aprovados.
-- [ ] Publicação 1.5 e E2E remoto aguardam autorização específica após rejeição automática do upload da fonte livre. Link 1.4 não contém esta correção.
+- [x] Publicação 1.5 autorizada; E2E remoto aprovado no job 130807111338 e download/hash conferidos. Link 1.5 publicado; bloqueio anterior resolvido.
+
+- [x] Entrega 1.5: 125 testes e E2E Chromium offline; release html-431cb85fadc6, hash em EVIDENCIAS.
+- [ ] Próximo: homologação no aparelho/destino reais (Android/content://, seletor nativo, Drive e impressora), com dados sintéticos; revisão de avisos de dependências permanece separada.
