@@ -1,3 +1,4 @@
+# Regressão 1.5: conferir alertas após expandir seus detalhes.
 name: Entregar HTML baixável
 on:
   workflow_dispatch:

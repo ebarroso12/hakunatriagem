@@ -88,7 +88,7 @@ try{
   assert.equal(await page.locator('[data-edit]').count(),1);
   await page.locator('#reports').click();
   assert.match(await page.locator('#modal').innerText(),/6 registro\(s\) da sessão inteira/);
-  assert.equal(await page.locator('#report-format option').count(),5);assert.match(await page.locator('#report-missing-alert').innerText(),/Nome não informado/);await page.locator('#report-destination').selectOption('download');await page.locator('#report-readable-consent').check();
+  assert.equal(await page.locator('#report-format option').count(),5);await page.locator('#report-missing-alert summary').click();assert.match(await page.locator('#report-missing-alert').innerText(),/Nome não informado/);await page.locator('#report-destination').selectOption('download');await page.locator('#report-readable-consent').check();
   const completeReady=page.waitForEvent('download');await page.locator('#report-complete').click();
   const completeFile=await completeReady;await completeFile.saveAs('test-results/relatorio-completo-sintetico.html');
   const fullHTML=await readFile('test-results/relatorio-completo-sintetico.html','utf8');
