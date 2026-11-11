@@ -1,4 +1,4 @@
-# Regressão 1.5: conferir alertas após expandir seus detalhes.
+# Regressão 1.5: documento opaco solicita impressão e confirma por mensagem autenticada.
 name: Entregar HTML baixável
 on:
   workflow_dispatch:

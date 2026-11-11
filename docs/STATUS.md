@@ -79,3 +79,9 @@ A tentativa de criar o blob da fonte livre NotoSans no GitHub foi rejeitada pela
 Próximo item: após autorização, atualizar payload com o estado local final (não reutilizar snapshot anterior), publicar código vazio, executar E2E offline no CI e verificar o download. Sem autorização, distribuição permanece pendente.
 
 Autorização específica recebida do usuário: “Sim, publicar a atualização 1.5”, em resposta ao pedido que incluía biblioteca PDF e fontes livres. Prosseguir somente com app vazio/código, sem participantes, relatórios clínicos ou emblemas pessoais. O registro de bloqueio anterior permanece histórico.
+
+### Validação real da impressão na entrega 1.5
+
+Primeiro CI 43104632875: 124 testes aprovados; E2E parou porque tentava ler detalhes recolhidos. Corrigida abertura dos detalhes no teste, sem alterar produto. Segundo CI 43104867975: downloads nos dez pares relatório/formato concluídos; falha ao ler a janela de impressão opaca em file://. Essa evidência revelou que o produto também precisava abandonar acesso a contentDocument de outro contexto.
+
+Teste sintético de origem opaca reproduziu a falha antes da alteração (hakunas-print-before.log). src/print-report.js agora injeta solicitação de impressão no próprio documento, aguarda fontes e recebe confirmação via postMessage, verificando referência da janela e token único; não depende de origem null como autenticação. Mensagens com janela ou token incorretos são ignoradas. Teste focado aprovado. E2E lê estado por mensagem e verifica o documento isolado através do controlador Playwright. Nenhuma política do navegador local foi contornada. As duas execuções que falharam não publicaram HTML de download.
