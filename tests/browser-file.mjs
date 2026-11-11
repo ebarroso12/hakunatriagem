@@ -1,6 +1,7 @@
 // Regressão do HTM real, com dados sintéticos. Não publica nem acessa rede.
 import {chromium} from '@playwright/test';
 import * as XLSX from 'xlsx';
+import {createCanvas} from '@napi-rs/canvas';
 import assert from 'node:assert/strict';
 import {mkdir,readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
@@ -14,6 +15,21 @@ page.on('pageerror',e=>errors.push(e.message));
 page.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});
 try{
   await page.goto(pathToFileURL(resolve('dist/triagem-hakunas.htm')).href,{waitUntil:'domcontentloaded',timeout:15000});
+  await page.locator('[data-tab=settings]').click();
+  await page.locator('[name=topNumber]').fill('01782');await page.locator('[name=location]').fill('Local sintético');await page.locator('[name=baseName]').fill('Base sintética');
+  const logoCanvas=createCanvas(100,100),logoCtx=logoCanvas.getContext('2d');logoCtx.fillStyle='#cc7034';logoCtx.fillRect(0,0,100,100);logoCtx.fillStyle='white';logoCtx.font='40px sans-serif';logoCtx.fillText('TEST',5,60);
+  const logoBuffer=logoCanvas.toBuffer('image/png');
+  await page.locator('#base-logo-file').setInputFiles({name:'base-sintetica.png',mimeType:'image/png',buffer:logoBuffer});
+  await page.locator('#save-header').waitFor({state:'visible'});await page.waitForFunction(()=>!document.querySelector('#save-header').disabled);
+  await page.locator('#legend-logo-file').setInputFiles({name:'legendarios-sintetico.png',mimeType:'image/png',buffer:logoBuffer});
+  await page.waitForFunction(()=>!document.querySelector('#save-header').disabled);
+  await page.locator('#save-header').click();
+  assert.match(await page.locator('.content > .event-header .event-title').innerText(),/TOP 01782/);
+  assert.equal(await page.locator('.content > .event-header .event-logo-left img').getAttribute('alt'),'Logo da base');
+  assert.equal(await page.locator('.content > .event-header .event-logo-right img').getAttribute('alt'),'Logo dos Legendários');
+  await page.evaluate(()=>document.fonts.ready);
+  assert.ok(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='HakunasTop'&&f.status==='loaded')));
+  await page.locator('[data-tab=people]').click();
   await page.locator('#new').click();
   for(const [key,value]of Object.entries({name:'Menor sintético',age:'17',weight:'80',height:'1,78'}))await page.locator(`[name=${key}]`).fill(value);
   await page.getByRole('button',{name:'Salvar avaliação',exact:true}).click();
@@ -25,7 +41,7 @@ try{
   // não uma comprovação de impressora ou do diálogo nativo de impressão.
   await page.evaluate(()=>{window.print=()=>{window.__printRequested=true;};});
   await page.locator('#print-record').click();
-  assert.ok(await page.evaluate(()=>window.__printRequested));
+  assert.ok(await page.evaluate(()=>window.__printRequested));assert.match(await page.locator('#print-sheet .event-title').innerText(),/TOP 01782/);
   await page.emulateMedia({media:'print'});
   const pdf=await page.pdf({path:'test-results/menor-sintetico.pdf',format:'A4'});
   assert.equal(pdf.subarray(0,4).toString(),'%PDF');
@@ -55,25 +71,52 @@ try{
   await page.locator('#confirm-import').click();
   assert.equal(await page.locator('[data-edit]').count(),3);
   await page.locator('#import').click();
+  await page.locator('#import-file').setInputFiles({name:'faltantes.csv',mimeType:'text/csv',buffer:Buffer.from('Nome;Idade;Peso;Altura\nCom lacunas sintético;;80;\n;;70;\nSomente nome sintético;;;')});
+  await page.locator('#confirm-import').waitFor();
+  assert.match(await page.locator('.import-summary').innerText(),/Prévia pronta: 3/);
+  assert.match(await page.locator('.import-summary').innerText(),/Campos vazios foram ignorados/);
+  await page.locator('#confirm-source-review').check();await page.locator('#confirm-import').click();
+  assert.equal(await page.locator('[data-edit]').count(),6);
+  await page.locator('#import').click();
   await page.locator('#import-file').setInputFiles({name:'invalido.csv',mimeType:'text/csv',buffer:Buffer.from('Nome;Idade\nAdulto sintético;40\nIdade inválida sintética;15')});
   await page.locator('#make-preview').click();
   assert.match(await page.locator('#import-error').innerText(),/Idade/);
   assert.equal(await page.locator('#confirm-import').count(),0);
   await page.locator('#close-modal').click();
-  assert.equal(await page.locator('[data-edit]').count(),3);
+  assert.equal(await page.locator('[data-edit]').count(),6);
+  await page.locator('#filter').selectOption('attention');
+  assert.equal(await page.locator('[data-edit]').count(),1);
+  await page.locator('#reports').click();
+  assert.match(await page.locator('#modal').innerText(),/6 registro\(s\) da sessão inteira/);
+  await page.locator('#report-readable-consent').check();
+  const completeReady=page.waitForEvent('download');await page.locator('#report-complete').click();
+  const completeFile=await completeReady;await completeFile.saveAs('test-results/relatorio-completo-sintetico.html');
+  const fullHTML=await readFile('test-results/relatorio-completo-sintetico.html','utf8');
+  assert.equal((fullHTML.match(/<article class="record"/g)||[]).length,6);
+  assert.match(fullHTML,/Nome não informado/);assert.match(fullHTML,/TOP 01782/);assert.match(fullHTML,/Base sintética/);assert.ok(completeFile.suggestedFilename().includes('TOP-01782'));
+  const missingReady=page.waitForEvent('download');await page.locator('#report-missing').click();
+  const missingFile=await missingReady;await missingFile.saveAs('test-results/dados-faltantes-sinteticos.xlsx');
+  const missingWB=XLSX.read(await readFile('test-results/dados-faltantes-sinteticos.xlsx'),{type:'buffer'});
+  assert.ok(XLSX.utils.sheet_to_json(missingWB.Sheets['Campos faltantes'],{header:1}).some(row=>row[2]==='Nome completo'));
+  const reportPage=await context.newPage();reportPage.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});reportPage.on('pageerror',e=>errors.push(e.message));
+  await reportPage.goto(pathToFileURL(resolve('test-results/relatorio-completo-sintetico.html')).href);
+  assert.equal(await reportPage.locator('article.record').count(),6);assert.equal(await reportPage.locator('[data-event-header]').count(),7);await reportPage.evaluate(()=>document.fonts.ready);assert.ok(await reportPage.evaluate(()=>[...document.fonts].some(f=>f.family==='HakunasTop'&&f.status==='loaded')));
+  await reportPage.close();
+  await page.locator('#close-modal').click();await page.locator('#filter').selectOption('');
   await page.locator('#backup').click();
   await page.locator('#password').fill('senha-sintetica-123');await page.locator('#password-confirm').fill('senha-sintetica-123');
   const ready=page.waitForEvent('download');await page.locator('#backup-form button').click();
-  const backup=await ready;await backup.saveAs('test-results/file-sintetico.LGND');
+  const backup=await ready;assert.ok(backup.suggestedFilename().includes('TOP-01782'));await backup.saveAs('test-results/file-sintetico.LGND');
   const envelope=JSON.parse(await readFile('test-results/file-sintetico.LGND','utf8'));assert.equal(envelope.format,'LGND');
   await page.getByRole('button',{name:'Arquivos e segurança',exact:true}).click();
   page.once('dialog',d=>d.accept());await page.locator('#clear').click();
+  await page.locator('[data-tab=settings]').click();await page.locator('[name=topNumber]').fill('9999');await page.locator('#save-header').click();await page.locator('[data-tab=shield]').click();
   await page.locator('#restore').click();await page.locator('#restore-file').setInputFiles('test-results/file-sintetico.LGND');await page.locator('#restore-password').fill('senha-sintetica-123');
   page.once('dialog',d=>d.accept());await page.locator('#restore-form button').click();await page.waitForFunction(()=>!document.querySelector('#modal').open);
-  await page.getByRole('button',{name:'Participantes',exact:true}).click();assert.equal(await page.locator('[data-edit]').count(),3);
+  await page.getByRole('button',{name:'Participantes',exact:true}).click();assert.equal(await page.locator('[data-edit]').count(),6);assert.match(await page.locator('.content > .event-header .event-title').innerText(),/TOP 01782/);
   for(const width of [390,320]){await page.setViewportSize({width,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
   await page.screenshot({path:'test-results/file-mobile-sintetico.png',fullPage:true});
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
-  console.log('E2E file:// aprovado: cadastro, menor vermelho, CPF/telefone e prévia automática móvel offline, mapeamento, importação atômica, chamada de impressão/PDF headless, backup/restore e viewport 390/320. Somente dados sintéticos.');
+  console.log('E2E file:// aprovado: cabeçalho de TOP e logos locais, fonte incorporada offline, cadastro, menor vermelho, CPF/telefone e prévia automática móvel offline, mapeamento, vazios e nomes ausentes, dois relatórios integrais offline, importação atômica, chamada de impressão/PDF headless, backup/restore e viewport 390/320. Somente dados sintéticos.');
 }catch(e){console.error('E2E file:// NÃO CONCLUÍDO: '+e.message);process.exitCode=1;}
 finally{await context.close();await browser.close();}

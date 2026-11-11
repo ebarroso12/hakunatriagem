@@ -32,3 +32,11 @@ Conferência de CPF/telefone roda no próprio JavaScript do HTML, sem consulta e
 O leitor conserva metadados de valor numérico e máscara. A exibição científica pode ser normalizada a partir do valor inteiro exato e seguro armazenado; o texto exibido original continua na origem da ficha. Uma máscara explícita pode preservar zeros que ainda existem na formatação. Zeros realmente perdidos sem evidência não são reconstruídos.
 
 Uma estrutura detectada abre a prévia automaticamente, sem incluir registros. Múltiplas estruturas mantêm seleção explícita. A confirmação continua necessária; alertas de dados e revisão clínica não se tornam conferidos automaticamente. Avisos são agrupados/recolhidos e detalhes completos permanecem nas fichas. A tabela de prévia e o botão de confirmação têm layout móvel próprio.
+
+## Atualização 1.3 — ausência não bloqueante
+
+Nome e demais campos ausentes deixam de interromper a importação/cadastro. Registros com algum dado são preservados mesmo sem nome ou com apenas um valor fornecido; linhas inteiramente vazias não representam participantes e são ignoradas. Tabelas com outros rótulos conhecidos podem ser processadas sem cabeçalho de nome; correspondências incertas ainda exigem mapeamento humano.
+
+Campos vazios conhecidos guardam a posição de origem quando disponível. O arquivo de origem é incluído na referência. Marcadores explícitos de ausência são normalizados para vazio com a fonte preservada. Não, false e zero não são ausência. Dados preenchidos inválidos continuam bloqueantes de modo atômico; não são convertidos em vazio para forçar aceitação.
+
+A ausência não produz fator clínico negativo nem faixa final artificial. Os relatórios abrangem todos os registros efetivamente salvos na sessão, independentemente da busca/paginação, e discriminam ausência de campo, revisão não feita e documento não conferido.

@@ -6,3 +6,5 @@ playwright-report/
 *.LGND
 
 src/generated-runtimes.js
+
+src/generated-header-assets.js

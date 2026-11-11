@@ -37,3 +37,21 @@ Origem da nova regra: instrução operacional explícita do usuário nesta manut
 O prompt recebido descreve uma versão sem OCR, mas o código 1.1 existente já contém OCR local e idiomas incorporados, com testes. Não houve instalação, expansão, remoção nem upload de OCR nesta execução. Resolver o escopo em item próprio antes de modificar esse recurso.
 
 Próximo item de implementação: revisão dirigida de ambiguidade/rejeição atômica no importador, com reprodução sintética. A execução E2E real do HTM permanece bloqueante para declarar verificação de navegador concluída. Android físico, content://, impressora e armazenamento remoto não foram testados.
+
+## Atualização de entrega 1.2
+
+Conferência automática local de CPF/telefone, metadados de número/máscara preservados, prévia automática para estrutura única, avisos agrupados e confirmação móvel. 75 testes aprovados; E2E real offline por file:// em Chromium Ubuntu 24.04, 320/390 px, aprovado no job 130192616968. Download em GitHub Releases verificado como anexo público, com hash idêntico ao build. Site atualizado, deployment appgdep_6af3a354cac08191b3d18878f3e2424d succeeded. Evidências e hashes em docs/EVIDENCIAS.md. Os registros anteriores acima são históricos da manutenção local. Android físico, content:// e impressora permanecem pendentes.
+
+## Versão 1.3 — pronta localmente, distribuição pendente
+
+Campos vazios não interrompem o processamento; registros com dados e nome ausente são preservados. Dois relatórios locais implementados: completo HTML e faltantes/revisões XLSX, da sessão inteira e do mesmo snapshot. 100 testes aprovados; build e diff --check concluídos. E2E local bloqueado por política; E2E remoto desta versão ainda não executado.
+
+A revisão automática rejeitou o envio de código ao GitHub por falta de autorização explícita. Autorização para distribuir código/HTML sem dados pessoais foi solicitada ao usuário. Não confundir o link 1.2 já publicado com esta versão 1.3 local. Detalhes e hash em docs/EVIDENCIAS.md.
+
+## Versão 1.4 — cabeçalho configurável, somente local
+
+Número do TOP, local, nome da base e emblemas locais configuráveis. Cabeçalho na tela, impressão e relatório; perfil incluído em backup validado antes da restauração. Fonte Anton incorporada e licenciada, independente de rede. Sem logotipos ou metadados de evento inventados.
+
+112/112 testes locais aprovados, build explícito e git diff --check aprovados. E2E real da versão 1.4 não concluído: Chromium bloqueia file:// com ERR_BLOCKED_BY_ADMINISTRATOR. Android, content:// e impressora não testados. As evidências Chromium da versão 1.2 não homologam a 1.4.
+
+HTML gerado em dist/Triagem-Hakunas-Corrigida.html; não enviado nem publicado. Permanece a rejeição automática anterior ao upload por falta de autorização explícita. Próximo passo: obter autorização específica para distribuir apenas código/HTML vazio e executar CI, depois verificar o download.

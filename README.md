@@ -1,6 +1,6 @@
 # Triagem Hakunas — HTML offline
 
-Versão 1.2.0. Aplicativo local para organizar participantes e apoiar a revisão profissional nas atividades Legendários Hakunas.
+Versão 1.3.0. Aplicativo local para organizar participantes e apoiar a revisão profissional nas atividades Legendários Hakunas.
 
 ## Baixar e usar sem internet
 
@@ -26,6 +26,19 @@ CPF e telefone são conferidos localmente: CPF por comprimento/dígitos verifica
 
 **Não existe garantia de reconhecimento de qualquer arquivo ou de exatidão do OCR.** DOC binário antigo, HEIC, TIFF, formatos proprietários, arquivos protegidos e certas estruturas complexas exigem conversão local ou entrada manual. Alguns PDFs com codificações/fontes/imagens especiais podem não ser legíveis. Arquivos muito grandes são recusados com mensagem. Não há interpretação clínica de texto livre nem liberação automática de participantes.
 
+## Campos vazios e dois relatórios offline
+
+Campos vazios não interrompem o processamento. Registros com dados mas sem nome são preservados com nome vazio, ID e origem; não se inventa identidade. Linhas inteiramente vazias são ignoradas. Marcadores explícitos `N/A`, `—` e “Não informado” são tratados como ausência, mantendo o texto original da importação. Zero, false, “Não” e “Nenhum” não são convertidos em vazio.
+
+Nome/idade/medidas ausentes continuam impedindo uma faixa clínica final, mas não o cadastro, a importação ou a geração de relatórios. Idade ausente não é declarada como menor. Dados preenchidos inválidos continuam bloqueantes e não são apagados para simular ausência. Não se deduzem diagnósticos de texto livre.
+
+Em **Participantes → Gerar relatórios**, use os dois botões:
+
+1. **Relatório completo (.html)**: todos os registros salvos da sessão, todos os campos atuais, fatores e revisão de cada seção, score parcial, cores provisórias, exclusões, lacunas, avisos e dados/origens preservados. Abre offline e permite imprimir/salvar PDF pelo navegador.
+2. **Dados faltantes (.xlsx)**: abas “Campos faltantes”, “Revisões pendentes”, “Resumo” e “Leia-me”. Cada lacuna é identificada por ID/nome disponível/campo/origem; campos opcionais e essenciais são distinguidos. Documento não conferido não é declarado ausente.
+
+Filtros e páginas não reduzem os relatórios. As duas saídas correspondem ao mesmo snapshot, capturado ao abrir a área de relatórios; alterações ainda não salvas não entram. Os arquivos são legíveis, não criptografados, gerados apenas no dispositivo e não substituem o backup. Nenhum relatório pessoal é publicado com o aplicativo.
+
 ## Fichas, triagem e retenção
 
 Cadastro, edição, exclusão, busca e filtros; páginas de 50 e até 5.000 participantes. A ficha inclui medidas, contato, condições informadas, fatores estruturados, seções revisadas, documentação e responsável. Campos de origem e avisos são preservados na edição, impressão e backup.
@@ -40,13 +53,13 @@ Impressão/PDF usa o navegador; CSV é resumo legível, neutraliza fórmulas e p
 
 ## Verificação desta entrega
 
-**75 testes aprovados**, build concluído. A entrega desta correção foi solicitada após a manutenção local; veja `docs/STATUS.md`, `TODO.md`, `docs/EVIDENCIAS.md` e `docs/ENTREGA.md`. Incluem regras, exclusões, dados intermediários inválidos, menores, unidades, layout em diversas posições, múltiplas abas/blocos, DOCX/ODT/HTML/XML/JSON, coordenadas PDF, proveniência, ZIP, backup, XSS e CSV.
+**100 testes aprovados**, build concluído. A entrega desta correção foi solicitada após a manutenção local; veja `docs/STATUS.md`, `TODO.md`, `docs/EVIDENCIAS.md` e `docs/ENTREGA.md`. Incluem regras, exclusões, dados intermediários inválidos, menores, unidades, layout em diversas posições, múltiplas abas/blocos, DOCX/ODT/HTML/XML/JSON, coordenadas PDF, proveniência, ZIP, backup, XSS e CSV.
 
 O worker OCR incorporado foi executado em contexto JS isolado, com WASM e idiomas embutidos, e reconheceu uma imagem sintética sem acesso à rede. PDF real sintético foi lido pelo motor incluído. O HTML final foi executado em DOM simulado (`file:`), com rede proibida, verificando cadastro, impressão, importação, campos extras e backup.
 
 A planilha fornecida foi lida localmente: 100 registros em uma estrutura, 16 campos reconhecidos. Somente contagens foram registradas; dados reais não foram inseridos em testes versionados.
 
-**Limite de verificação:** nesta atualização não houve ensaio em navegador real, telefone físico, modo avião de um dispositivo ou impressora. O ambiente gerenciado não oferece a rota de navegador prevista para essa verificação; a execução DOM simulada não equivale à homologação em Safari/Chrome ou em todos os aparelhos. A versão anterior teve ensaio Chromium em 320/390 px. Abra o HTML salvo e confira a operação no navegador de destino antes do uso real.
+**Verificação em navegador:** a versão 1.2 passou no E2E real em Chromium no GitHub Actions (Ubuntu 24.04), HTM por file:// com contexto offline e viewports 320/390. A tentativa no ambiente local continua bloqueada por política. Não houve teste em Android/iPhone físico, content://, impressora ou modo avião de um aparelho. O ensaio Chromium não equivale a homologação nesses destinos.
 
 O sistema não foi homologado clínica ou regulatoriamente, não diagnostica, prescreve ou libera esforço físico. Julgamento profissional e validação do protocolo continuam necessários.
 

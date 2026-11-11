@@ -9,7 +9,7 @@ Um item de implementação por execução. Não instalar skills, commitar, envia
 - [x] Reproduzir falha com dados sintéticos e idade isolada.
 - [x] Corrigir somente o critério etário e a explicação pública.
 - [x] Executar regressões, teste completo, build e diff --check.
-- [ ] Concluir E2E do HTM real por file:// em viewport móvel. Tentativa executada: bloqueada por ERR_BLOCKED_BY_ADMINISTRATOR; sem homologação.
+- [x] E2E real concluído em Chromium no runner GitHub Ubuntu 24.04, file:// offline e 320/390 px. A tentativa local continuou bloqueada; sem homologação física.
 - [x] Registrar resultado e limitações sem declarar homologação Android/impressora.
 
 ## Próximos itens — ainda não executar
@@ -27,5 +27,27 @@ Um item de implementação por execução. Não instalar skills, commitar, envia
 - [x] Uma estrutura: prévia automática; múltiplas estruturas: seleção preservada.
 - [x] Avisos agrupados/recolhidos e confirmação adaptada à tela estreita.
 - [x] Suíte local: 75 testes aprovados. Confirmação humana e revisão clínica preservadas.
-- [ ] E2E real offline em Chromium no runner GitHub, usando somente fixtures sintéticas.
-- [ ] Distribuir novo HTML e verificar download do anexo e checksum.
+- [x] E2E real offline em Chromium no runner GitHub aprovado; job 130192616968, somente fixtures sintéticas.
+- [x] HTML 1.2 entregue por GitHub Releases; download público 200, attachment e SHA-256 iguais ao build. Site atualizado com status succeeded.
+
+## Item 03 — campos ausentes e dois relatórios integrais (pedido de 10/11/2026)
+
+- [x] Reproduzir falhas de nome/idade/medidas vazios; 9 casos iniciais, 8 falhas antes.
+- [x] Continuar com campos ausentes, mantendo registros sem nome e ignorando somente linhas sem dados.
+- [x] Preservar origem de campos vazios; não confundir vazio com negativo/zero/normal.
+- [x] Não classificar idade desconhecida como menor nem concluir faixa com essenciais ausentes.
+- [x] Gerar relatório integral HTML e Excel separado de faltantes/revisões, sem truncar pela tela.
+- [x] Testar snapshot, XSS/fórmulas, origem e preservação de dados: 100 testes locais aprovados.
+- [ ] E2E real offline e download dos dois relatórios no Chromium de CI.
+- [ ] Entregar HTML 1.3 e verificar download/checksum, sem incluir dados pessoais no pacote.
+
+## Item 04 — cabeçalho por TOP (11/11/2026)
+
+- [x] Configurar número do TOP, local, base e dois emblemas locais, com prévia.
+- [x] Base à esquerda, Legendários à direita; TOP central, local e nome da base abaixo.
+- [x] Incorporar fonte Anton e licença OFL para uso offline, sem prometer fonte idêntica à referência.
+- [x] Incluir cabeçalho na tela, impressão, relatório completo e backup; identificar arquivos pelo TOP.
+- [x] Proteger troca de TOP e restauração inválida; iniciar sessão nova somente por ação explícita.
+- [x] 112 testes locais aprovados; build e diff --check aprovados.
+- [ ] E2E real da versão 1.4: navegação local bloqueada por política; execução remota depende de autorização.
+- [ ] Distribuir HTML 1.4 sem dados pessoais, após autorização de upload. Nenhum commit desta versão.
