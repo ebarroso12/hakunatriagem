@@ -107,3 +107,17 @@ Um item de implementação por execução. Não instalar skills, commitar, envia
 
 - [x] Verificação local 1.8: 189 testes e build; auditoria de dependências sem alertas conhecidos; inventário em AUDITORIA-1.8.md.
 - [ ] Publicação e E2E remotos 1.8 dependem de autorização específica após rejeição automática. Não apresentar o link 1.7 como correção 1.8.
+
+## Verificação remota 1.8 concluída
+
+Autorização específica recebida e publicação realizada. GitHub: commit 7dc9804fefff2f1578251e440d027c142a202769; execução 43325453926, job 131556654472, concluídos com sucesso. 189/189 testes; E2E Chromium file:// e hospedado em loopback aprovados, incluindo prévia, leitura do PDF e emblemas com fundos desligados. Uma primeira execução falhou por seletor de teste ambíguo; o seletor foi delimitado antes da execução aprovada.
+
+Download v1.8.0 confirmado HTTP 200 e attachment, 13.897.081 bytes. SHA-256 remoto e local: 7dab87af95ddc01b4e4cb525158d8e4ae55ab74eae66df84380e65d913f0756a. URL: https://github.com/ebarroso12/hakunatriagem/releases/download/html-7dc9804fefff/Triagem-Hakunas-v1.8.0.html
+
+Os registros anteriores de bloqueio/pendência são históricos e foram resolvidos quanto a GitHub, CI e download. Publicação privada Sites concluída; evidência abaixo. Permanecem sem homologação Android físico/content://, Drive, seletor nativo de pasta e impressora física. Próximo item: homologação nesses destinos com dados sintéticos.
+
+## Fechamento da publicação privada 1.8
+
+Sites retornou succeeded para deployment appgdep_6af646f3927481918a6acf576306b41d, versão appgprj_6af3885f25548191af99e68bff13d230~appgver_ffa2fdcd260c8191ae4695ac4d4b6b60. Fonte exata: eefb68f70f932e26e21813630c020f1d29a37ce3, enviada sem força; archive audit-v18.tar.gz contém manifest e dist do build. Audiência privada preservada. URL: https://triagem-hakunas.ebarroso12.chatgpt.site
+
+Publicação, CI e download 1.8 concluídos. O sucesso de implantação não acrescenta homologação do gateway em aparelho, Android, Drive ou impressora. Nenhum dado de participante foi enviado. Próximo item aberto: homologação física com dados sintéticos.
