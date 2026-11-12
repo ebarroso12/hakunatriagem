@@ -121,3 +121,10 @@ Os registros anteriores de bloqueio/pendência são históricos e foram resolvid
 Sites retornou succeeded para deployment appgdep_6af646f3927481918a6acf576306b41d, versão appgprj_6af3885f25548191af99e68bff13d230~appgver_ffa2fdcd260c8191ae4695ac4d4b6b60. Fonte exata: eefb68f70f932e26e21813630c020f1d29a37ce3, enviada sem força; archive audit-v18.tar.gz contém manifest e dist do build. Audiência privada preservada. URL: https://triagem-hakunas.ebarroso12.chatgpt.site
 
 Publicação, CI e download 1.8 concluídos. O sucesso de implantação não acrescenta homologação do gateway em aparelho, Android, Drive ou impressora. Nenhum dado de participante foi enviado. Próximo item aberto: homologação física com dados sintéticos.
+
+## Salvamento 1.8.1 — item atual
+
+- [x] Configuração opcional de destino Google Drive/OneDrive pelo aparelho, conforme resposta Windows/iOS; cinco formatos nos dois relatórios.
+- [x] Cancelamento/indisponibilidade sem download oculto; sem autenticação/upload automático ou confirmação falsa.
+- [ ] Encerrar suite/build/CI, conferir download e atualizar site privado mantendo audiência.
+- [ ] Homologação com contas/aparelhos reais Windows e iOS; sem dados reais nos testes de desenvolvimento.

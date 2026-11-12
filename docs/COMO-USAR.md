@@ -78,3 +78,13 @@ Foram corrigidos limites numéricos de IMC (erro IEEE-754 em 30/40 e nas categor
 CSV UTF-8 sem BOM, UTF-16 LE/BE e Windows-1252 passam pela decodificação antes da tabela, sem converter identificadores textuais em números. As verificações estruturais de CPF/telefone continuam sem consulta a cadastro e sem reconstruir dígitos por suposição.
 
 Veja AUDITORIA-1.8.md para o inventário, evidências e limites. Nenhuma versão é uma promessa de ler todo layout/arquivo, de reconhecer todo OCR ou de homologação em qualquer celular/Drive/impressora. Salve backup antes de trocar de arquivo; critérios originais, versões e salvaguardas etárias permanecem.
+
+## 1.8.1 — Salvar pelo Windows ou iOS
+
+Configurações → **Salvar arquivos · Google Drive e OneDrive** oferece formato e destino preferidos. XLSX, CSV, ODS, PDF e HTML valem tanto para relatório completo como para dados faltantes. A preferência não envia arquivos; fica no navegador quando permitido, sem fichas, contas ou tokens. Não integra o backup nem é garantia de persistência entre HTMLs/navegadores.
+
+- **Windows:** instale e configure Google Drive para computador ou OneDrive. Escolha o serviço e “Escolher pasta sincronizada no computador”. Ao salvar, selecione a pasta desejada dele no seletor. O app escreve o arquivo local; o serviço faz a sincronização.
+- **iPhone/iPad:** instale o serviço e entre na sua conta nele. Escolha o serviço e “Compartilhar com o aplicativo no celular”. No compartilhamento, escolha a conta/pasta no serviço. Se o navegador não compartilhar o formato, baixe para Arquivos e use o serviço para enviar. A disponibilidade varia entre Safari, outros navegadores e visualizadores de arquivos.
+- **Offline:** triagem e geração/salvamento local continuam disponíveis. Upload/sincronização requerem internet. O app não conecta contas Google/Microsoft internamente e não afirma upload concluído; confira no próprio serviço.
+
+Cancelar não baixa outro arquivo escondido. Se o destino em nuvem exigir um seletor ausente, o app avisa e permite que você escolha Compartilhar ou Baixar. A escolha de Google Drive/OneDrive orienta o usuário, mas o seletor/compartilhamento é do sistema: ele não pode ser forçado nem a pasta validada como pertencente ao serviço. LGND continua sendo o backup restaurável, separado dos relatórios legíveis.

@@ -227,3 +227,7 @@ Os registros anteriores de bloqueio/pendência são históricos e foram resolvid
 Sites retornou succeeded para deployment appgdep_6af646f3927481918a6acf576306b41d, versão appgprj_6af3885f25548191af99e68bff13d230~appgver_ffa2fdcd260c8191ae4695ac4d4b6b60. Fonte exata: eefb68f70f932e26e21813630c020f1d29a37ce3, enviada sem força; archive audit-v18.tar.gz contém manifest e dist do build. Audiência privada preservada. URL: https://triagem-hakunas.ebarroso12.chatgpt.site
 
 Publicação, CI e download 1.8 concluídos. O sucesso de implantação não acrescenta homologação do gateway em aparelho, Android, Drive ou impressora. Nenhum dado de participante foi enviado. Próximo item aberto: homologação física com dados sintéticos.
+
+## Salvamento 1.8.1 — verificação local
+
+196/196 testes aprovados em pnpm test (build automático), incluindo sete testes novos de destinos/preferências e dois PDFs reais. Testes focados de salvamento: 15/15. Sintaxe e git diff --check aprovados. Chromium local file:// bloqueado por ERR_BLOCKED_BY_ADMINISTRATOR, sem contorno. E2E CI ampliado; resultados remotos/publicação ainda não confirmados nesta etapa. Windows/iOS e contas reais não homologados. Ver SALVAMENTO-1.8.1.md.

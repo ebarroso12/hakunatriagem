@@ -20,6 +20,21 @@ try{
   await page.goto(pathToFileURL(resolve('dist/triagem-hakunas.htm')).href,{waitUntil:'domcontentloaded',timeout:15000});
   assert.equal(await page.locator('.topbar #print-report').count(),1);assert.match(await page.locator('#app-version').innerText(),/1\.8/);
   await page.locator('[data-tab=settings]').click();
+  await page.locator('#save-format').selectOption('pdf');
+  await page.locator('#save-destination').selectOption('onedrive');
+  await page.locator('#save-cloud-method').selectOption('share');
+  await page.locator('#save-preferences-form button[type=submit]').click();
+  assert.match(await page.locator('#save-preferences-status').innerText(),/Preferência/);
+  assert.match(await page.locator('#save-cloud-help').innerText(),/OneDrive/);
+  assert.match(await page.locator('#save-cloud-help').innerText(),/não conecta/);
+  await page.locator('#save-destination').selectOption('google-drive');
+  assert.match(await page.locator('#save-cloud-help').innerText(),/Google Drive/);
+  // Conservar os padrões dos demais cenários de regressão.
+  await page.locator('#save-format').selectOption('html');
+  await page.locator('#save-destination').selectOption('choose');
+  await page.locator('#save-cloud-method').selectOption('choose');
+  await page.locator('#save-preferences-form button[type=submit]').click();
+
   await page.locator('[name=topNumber]').fill('01782');await page.locator('[name=location]').fill('Local sintético');await page.locator('[name=baseName]').fill('Base sintética');
   const logoCanvas=createCanvas(100,100),logoCtx=logoCanvas.getContext('2d');logoCtx.fillStyle='#cc7034';logoCtx.fillRect(0,0,100,100);logoCtx.fillStyle='white';logoCtx.font='40px sans-serif';logoCtx.fillText('TEST',5,60);
   const logoBuffer=logoCanvas.toBuffer('image/png');
