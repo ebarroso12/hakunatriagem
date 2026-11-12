@@ -179,3 +179,19 @@ Reprodução antes: testes de critérios falharam por ausência do módulo; UI f
 A regra de menoridade não pode virar preto apenas pela idade; segue sem IMC/faixa adulta. Implante pode mudar somente por edição explícita registrada, conservando a versão original. As 40 regressões do núcleo original continuam passando.
 
 Arquivos novos: default-groups.js, criteria.js, criteria-editor.js e testes criteria*. Módulos afetados: core, app, event-header, reports, report-exports, estilos, build/versão e browser-file. Nenhuma ampliação de OCR nem inferência de texto clínico. O E2E inclui versionamento, aplicação, relatórios e backup/restore, além do fluxo 1.6/1.5. Android/content://, Drive, seletor nativo e impressão física permanecem sem homologação.
+
+## Entrega 1.7 verificada — lista 1.6 incluída
+
+Código público no commit c7556341f9ed49775d627cc38e35f496fbfb7d39. Workflow 43136040535, job 130911507786: 142 testes aprovados, build e E2E real file:// com rede desativada em Chromium aprovados. Inclui editar/adicionar critérios, preservar resultado antigo, aplicar com confirmação, exportar catálogo, backup/restore personalizado, filtros das quatro cores, dez downloads de relatórios e impressão por documento isolado. Dados somente sintéticos.
+
+Download direto verificado HTTP 200 e Content-Disposition attachment; 13.850.846 bytes. SHA-256 público/local idênticos: 01a652b7215292a8c38624030294766d7173d4a74456d83b7981f8f53821aa66. URL: https://github.com/ebarroso12/hakunatriagem/releases/download/html-c7556341f9ed/Triagem-Hakunas-Corrigida.html
+
+Pedido de publicação 1.7 explícito no turno e autorização 1.6 também recebida. Bloqueios anteriores de distribuição 1.6 resolvidos por esta entrega conjunta; registros anteriores são históricos. Sem dados clínicos reais publicados. Android físico/content://, Drive real, seletor nativo real e impressora continuam sem homologação; os testes de seletor usam simulação e impressão não comprova papel físico. Atualização do site privado selecionado em preparação, mantendo acesso existente. O helper Sites não está presente no executor; sincronização Git usará credencial efêmera exclusivamente por stdin/ambiente do subprocesso, sem token em arquivo/argumentos/logs, e archive de dist + manifest do commit enviado.
+
+### Publicação do site 1.7 concluída
+
+Sites atualizado com acesso owner-private preservado. Fonte exata enviada em fast-forward ao repositório Sites: 327d8476ed841d6830e8945c5ba0ab323e59cee9, descendente do antigo 0f4ca0e. Manifest .openai/hosting.json e dist foram empacotados em criteria-v17.tar.gz sem dados pessoais. Deploy appgdep_6af519c4dd28819180e2e7318c7bcd00 retornou succeeded; versão appgprj_6af3885f25548191af99e68bff13d230~appgver_0b4a03f0e17c819185447591fd5a61bc. URL literal: https://triagem-hakunas.ebarroso12.chatgpt.site
+
+A publicação foi efetuada pela skill Sites, com credencial transitória apenas em stdin/memória do subprocesso. O helper de origem padrão não estava instalado; Git ordinário sem força foi usado e a proveniência do archive foi conferida. O resultado nativo succeeded comprova implantação, não testes adicionais de Android ou Drive. Download público GitHub c7556341f9ed continua a entrega offline conferida. Sem alteração de audiência, banco clínico ou envio de registros.
+
+Estado final: critérios editáveis/adicionais e faixas, controle de versão por ficha, aplicação explícita, relatórios auditáveis e lista por nome/cores concluídos. 142 testes e E2E Chromium offline aprovados. Próximos itens: revisão de dependências e homologação em aparelho/destinos reais com dados sintéticos.

@@ -87,4 +87,9 @@ Um item de implementação por execução. Não instalar skills, commitar, envia
 - [x] Nova versão não recalcula fichas antigas silenciosamente; aplicar explicitamente reabre revisões.
 - [x] Relatórios seguem versões individuais, incluem catálogo, autoria e condições.
 - [x] 142 testes locais aprovados; regressões de menoridade, parser e exportação preservadas.
-- [ ] E2E real offline e entrega da versão 1.7 com a lista 1.6 incluída. Publicação expressamente pedida pelo usuário em “MODIFIQUE E PUBLIQUE ATUALIZE TUDO”.
+- [x] E2E real offline e entrega da versão 1.7 com a lista 1.6 incluída. Publicação expressamente pedida pelo usuário em “MODIFIQUE E PUBLIQUE ATUALIZE TUDO”.
+
+- [x] Entrega conjunta 1.7/1.6 publicada e conferida: 142 testes e E2E offline aprovados; download/hash em EVIDENCIAS. Bloqueios de publicação anteriores resolvidos.
+- [x] Site privado atualizado para 1.7, deployment appgdep_6af519c4dd28819180e2e7318c7bcd00 succeeded; pendências de aparelhos/destinos reais continuam separadas.
+
+- [x] Entrega conjunta 1.7 concluída também no site, preservando acesso privado e sem dados pessoais.
