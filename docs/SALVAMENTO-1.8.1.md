@@ -29,3 +29,7 @@ Ajuda “Abrir no celular” inclui “Verificar preparo offline neste navegador
 Essa verificação comprova apenas recursos presentes no navegador onde foi executada. Não comprova instalação pela Tela de Início, execução no Quick Look, conta do usuário, gateway offline ou modo avião em iPhone físico. O responsável perguntou como usar offline no iPhone; explicada a necessidade de primeira preparação online e teste real por ícone.
 
 Verificação final local ampliada: 205/205 testes aprovados, build e sintaxe do worker gerado aprovados, git diff --check limpo. Chromium/WebKit reais em CI ainda pendentes neste ponto; não confundir essa contagem com homologação iOS.
+
+CI inicial df4bedf, execução 43330522235: 205 testes e regressão Chromium aprovados; hosted-audit com cache consultado aprovado; mobile Chromium aprovado. WebKit completou o fluxo hospedado, mas a navegação subsequente ao file:// expirou. Release não publicada. Próximo ensaio isola cada modo em contexto novo e intercepta somente HTTP(S), eliminando interferência entre sessão web e arquivo; a causa exata ainda não é afirmada.
+
+Revisão adicional reproduziu getter serviceWorker que lança SecurityError e rejeitava a checagem antes do tratamento. Corrigido sem anunciar preparo: aviso unsupported. 206/206 testes locais aprovados após essa correção.

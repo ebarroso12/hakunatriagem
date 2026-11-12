@@ -1,6 +1,7 @@
 // Verifica somente recursos estáticos do app. Não persiste nem envia fichas.
-export async function verifyOfflineCache({standalone=globalThis.__HAKUNAS_STANDALONE__,serviceWorker=globalThis.navigator?.serviceWorker,Channel=globalThis.MessageChannel,buildId=globalThis.__HAKUNAS_BUILD_ID__,timeoutMs=10000}={}){
+export async function verifyOfflineCache({standalone=globalThis.__HAKUNAS_STANDALONE__,serviceWorker,Channel=globalThis.MessageChannel,buildId=globalThis.__HAKUNAS_BUILD_ID__,timeoutMs=10000}={}){
  if(standalone)return{state:'local',message:'HTML local: os recursos estão no arquivo, mas a execução depende do navegador. Este teste não habilita o visualizador do iPhone e não prepara instalação pela Tela de Início. Abra o site no Safari para preparar essa alternativa.'};
+ try{if(serviceWorker===undefined)serviceWorker=globalThis.navigator?.serviceWorker;}catch{return{state:'unsupported',message:'O navegador bloqueou o acesso aos recursos de instalação offline neste contexto. Abra o site diretamente no Safari/Chrome; não foi confirmado preparo offline.'};}
  if(!serviceWorker||!Channel||!buildId)return{state:'unsupported',message:'Verificação de recursos offline não disponível neste contexto. Abra o site em um navegador compatível; não foi confirmado preparo offline.'};
  let timer,channel,cancelled=false;
  try{return await Promise.race([(async()=>{const registration=await serviceWorker.ready;if(cancelled)return;if(!registration.active)throw Error('Sem worker ativo.');channel=new Channel();const reply=new Promise(resolve=>{channel.port1.onmessage=e=>resolve(e.data);});registration.active.postMessage({type:'hakunas-offline-check'},[channel.port2]);const data=await reply;
