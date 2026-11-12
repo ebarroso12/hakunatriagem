@@ -1,4 +1,4 @@
-# Regressão 1.8.1: Chromium obrigatório; diagnóstico WebKit com limitação explícita e separado da liberação desktop.
+# Regressão 1.8.1: comparação de ID impresso tolera somente espaços de extração; diagnóstico WebKit separado.
 name: Entregar HTML baixável
 on:
   workflow_dispatch:
