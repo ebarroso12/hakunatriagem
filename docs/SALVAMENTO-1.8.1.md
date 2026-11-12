@@ -13,3 +13,19 @@ Limites: o app não sabe qual aplicativo/conta/pasta o usuário escolheu; API sh
 ## Salvamento 1.8.1 — verificação local
 
 196/196 testes aprovados em pnpm test (build automático), incluindo sete testes novos de destinos/preferências e dois PDFs reais. Testes focados de salvamento: 15/15. Sintaxe e git diff --check aprovados. Chromium local file:// bloqueado por ERR_BLOCKED_BY_ADMINISTRATOR, sem contorno. E2E CI ampliado; resultados remotos/publicação ainda não confirmados nesta etapa. Windows/iOS e contas reais não homologados. Ver SALVAMENTO-1.8.1.md.
+
+## Abertura em celulares — relato e alcance
+
+O responsável enviou captura do iPhone mostrando prévia de arquivo com fundo vazio, sem barra do Safari. Compatível com visualizador que não executa JavaScript; não foi coletado log do aparelho. O corpo HTML anterior era vazio até o script renderizar: isso foi reproduzido com JS desabilitado. Agora há orientação estática visível antes do script, link privado e ajuda no app. Isso evita silêncio, mas não habilita execução no Quick Look nem resolve por si só offline iOS. A causa no Android ainda não foi reproduzida em aparelho.
+
+Build inclui alvo ES2020 e ícones PNG 192/512 mais metadados Apple para melhorar a preparação pelo navegador. Teste CI novo verifica Chromium e WebKit em viewport móvel: execução hospedada e file:// offline, ajuda, cadastro e PDF; JavaScript desabilitado deve exibir orientação. WebKit em Linux não é Safari/iOS físico nem homologação de Quick Look.
+
+Acesso escolhido pelo responsável: restrito. Não tornar site público nem adicionar terceiros sem identificá-los. Hoje a audiência conhecida é somente o proprietário. Uso pelo link exige internet inicial; uso offline instalado depende de preparo e teste real, incluindo o gateway privado. Não declarar equivalência entre link e HTML nem prometer primeira abertura offline em iPhone.
+
+## Preparação offline verificável
+
+Ajuda “Abrir no celular” inclui “Verificar preparo offline neste navegador”. O worker verifica cache dos recursos estáticos e identidade da versão nos dois HTMLs; login privado em cache ou recursos ausentes não são anunciados prontos. Mensagem por MessageChannel com versão comparada à tela, timeout e cancelamento tardio; arquivo local não é confundido com instalação iOS. Não persiste participantes. Uma falha de sintaxe na primeira geração do worker novo foi detectada por node --check e corrigida antes de publicação; o script gerado agora tem teste executável, incluindo login e ícone ausente.
+
+Essa verificação comprova apenas recursos presentes no navegador onde foi executada. Não comprova instalação pela Tela de Início, execução no Quick Look, conta do usuário, gateway offline ou modo avião em iPhone físico. O responsável perguntou como usar offline no iPhone; explicada a necessidade de primeira preparação online e teste real por ícone.
+
+Verificação final local ampliada: 205/205 testes aprovados, build e sintaxe do worker gerado aprovados, git diff --check limpo. Chromium/WebKit reais em CI ainda pendentes neste ponto; não confundir essa contagem com homologação iOS.

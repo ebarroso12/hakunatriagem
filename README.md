@@ -6,9 +6,9 @@ Versão 1.3.0. Aplicativo local para organizar participantes e apoiar a revisão
 
 **[Baixar o HTML corrigido](https://github.com/ebarroso12/hakunatriagem/releases/latest/download/Triagem-Hakunas-Corrigida.html)**
 
-Na página, clique em **Baixar HTML completo**. Guarde `Triagem-Hakunas-Offline.html` e abra o arquivo em um navegador atualizado. Depois de salvo, o aplicativo não depende do site, de login, servidor, CDN ou internet para operar. O HTML contém interface, marca, leitores, worker PDF, núcleo WASM e idiomas português/inglês do OCR. Tamanho aproximado: 12 MB.
+Na página, clique em **Baixar HTML completo**. Guarde `Triagem-Hakunas-Offline.html` e abra o arquivo em um navegador atualizado. Em um navegador compatível que execute o arquivo, ele não depende do site, de login, servidor, CDN ou internet para operar. Isso não garante abertura no visualizador de arquivos do iOS ou em content:// do Android. O HTML contém interface, marca, leitores, worker PDF, núcleo WASM e idiomas português/inglês do OCR. Tamanho aproximado: 14 MB.
 
-O download em GitHub Releases entrega o arquivo como anexo, sem depender do acesso ao Site privado. O site é um canal adicional de distribuição. A execução local é a entrega principal. O HTML standalone inclui uma política CSP que impede conexões HTTP(S) e não registra service worker. Links externos de fontes são opcionais e exigem conexão se forem abertos.
+O download em GitHub Releases entrega o arquivo como anexo, sem depender do acesso ao Site privado. O site é um canal adicional de distribuição. A execução local depende de navegador compatível. No iPhone, a prévia de arquivos/Quick Look pode não executar JavaScript; o HTML baixado não é uma distribuição iOS homologada. Para acesso pelo navegador, use o site restrito. O HTML standalone inclui uma política CSP que impede conexões HTTP(S) e não registra service worker. Links externos de fontes são opcionais e exigem conexão se forem abertos.
 
 ## Importação e localização dos campos
 

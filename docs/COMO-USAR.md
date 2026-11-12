@@ -88,3 +88,11 @@ Configurações → **Salvar arquivos · Google Drive e OneDrive** oferece forma
 - **Offline:** triagem e geração/salvamento local continuam disponíveis. Upload/sincronização requerem internet. O app não conecta contas Google/Microsoft internamente e não afirma upload concluído; confira no próprio serviço.
 
 Cancelar não baixa outro arquivo escondido. Se o destino em nuvem exigir um seletor ausente, o app avisa e permite que você escolha Compartilhar ou Baixar. A escolha de Google Drive/OneDrive orienta o usuário, mas o seletor/compartilhamento é do sistema: ele não pode ser forçado nem a pasta validada como pertencente ao serviço. LGND continua sendo o backup restaurável, separado dos relatórios legíveis.
+
+## Tela branca no visualizador do iPhone/Android
+
+O arquivo HTML é código de aplicativo. Visualizar um anexo pode mostrar apenas o documento sem executar JavaScript. No iPhone, Quick Look/Arquivos não deve ser apresentado como navegador compatível; no Android, visualizadores do Drive/WhatsApp e content:// variam. Esta versão exibe orientação estática quando a interface não inicia, mas não transforma o visualizador em navegador.
+
+Para abrir pelo link, use Safari/Chrome com internet e autorização no site restrito. Para preparar um atalho/instalação, use Adicionar à Tela de Início quando disponível. Isso exige uma primeira abertura online e não garante offline: teste no aparelho com dados fictícios e modo avião antes de depender dele. O cache não guarda suas fichas; guarde backup antes de fechar. Não houve homologação física iOS/Android ou do cache através do gateway privado.
+
+Em **Abrir no celular → Verificar preparo offline neste navegador**, o app consulta os recursos estáticos guardados da versão atual. Cache antigo, incompleto ou com tela de login no lugar do app não confirma preparo. Se informar recursos conferidos, ainda faça o teste real em modo avião por meio do ícone, com sessão vazia e backup anterior. Essa consulta não salva participantes nem habilita JavaScript no visualizador do iPhone.

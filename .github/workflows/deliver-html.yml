@@ -1,4 +1,4 @@
-# Regressão 1.8.1: destinos opcionais Google Drive/OneDrive pelo aparelho; sem OAuth ou upload automático.
+# Regressão 1.8.1: destinos pelo aparelho, orientação de abertura e preparo offline verificável; Chromium e WebKit.
 name: Entregar HTML baixável
 on:
   workflow_dispatch:
@@ -19,12 +19,13 @@ jobs:
       - run: npm ci
       - run: npm test
       - name: Preparar Chromium para teste com dados sintéticos
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium webkit
       - name: Testar HTML real offline em Chromium
         run: |
           export CHROMIUM_PATH="$(node --input-type=module -e "import {chromium} from '@playwright/test'; process.stdout.write(chromium.executablePath())")"
           node tests/browser-file.mjs
           node tests/browser-hosted-audit.mjs
+          node tests/browser-mobile-launch.mjs
       - name: Publicar somente o HTML testado como arquivo de download
         env:
           GH_TOKEN: ${{ github.token }}
@@ -35,5 +36,5 @@ jobs:
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" dist/Triagem-Hakunas-Corrigida.html "$hakunas_html" --clobber --repo "$GITHUB_REPOSITORY"
           else
-            gh release create "$tag" dist/Triagem-Hakunas-Corrigida.html "$hakunas_html" --target "$GITHUB_SHA" --title 'Triagem Hakunas — HTML offline corrigido' --notes 'Arquivo HTML único offline. Versão 1.8.1: preferências de formato e destino Google Drive/OneDrive pelo aparelho Windows/iOS; auditoria e correções de impressão/validação/importação/backup, prévia do relatório e versões preservadas; lista de localização com busca por nome, filtro verde/amarelo/vermelho/preto e ordenação; relatórios completos e faltantes em XLSX, CSV, ODS, PDF real ou HTML; impressão visível, alertas de lacunas por participante e seleção de destino. Google Drive/OneDrive dependem do seletor/compartilhamento do sistema, sem autenticação no app ou upload automático. Gerado após testes e E2E em Chromium offline, somente dados fictícios; sem homologação Android físico, diálogo nativo de salvar, Drive real ou impressora.' --latest --repo "$GITHUB_REPOSITORY"
+            gh release create "$tag" dist/Triagem-Hakunas-Corrigida.html "$hakunas_html" --target "$GITHUB_SHA" --title 'Triagem Hakunas — HTML offline corrigido' --notes 'Arquivo HTML único offline. Versão 1.8.1: preferências de formato e destino Google Drive/OneDrive pelo aparelho Windows/iOS; auditoria e correções de impressão/validação/importação/backup, prévia do relatório e versões preservadas; lista de localização com busca por nome, filtro verde/amarelo/vermelho/preto e ordenação; relatórios completos e faltantes em XLSX, CSV, ODS, PDF real ou HTML; impressão visível, alertas de lacunas por participante e seleção de destino. Google Drive/OneDrive dependem do seletor/compartilhamento do sistema, sem autenticação no app ou upload automático. Inclui orientação estática para visualizadores sem JavaScript e consulta ao cache da versão atual; não habilita Quick Look nem comprova instalação iOS. Gerado após testes e E2E em Chromium/WebKit, somente dados fictícios; sem homologação Android físico, diálogo nativo de salvar, Drive real ou impressora.' --latest --repo "$GITHUB_REPOSITORY"
           fi
