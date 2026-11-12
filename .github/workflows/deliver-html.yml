@@ -1,4 +1,4 @@
-# Regressão 1.8: auditoria funcional, impressão/PDF, entradas, critérios e operações de arquivo.
+# Regressão 1.8: auditoria funcional; seletores hospedados limitados à lista visível.
 name: Entregar HTML baixável
 on:
   workflow_dispatch:
