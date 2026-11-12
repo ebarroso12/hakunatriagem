@@ -68,3 +68,23 @@ Um item de implementação por execução. Não instalar skills, commitar, envia
 
 - [x] Entrega 1.5: 125 testes e E2E Chromium offline; release html-431cb85fadc6, hash em EVIDENCIAS.
 - [ ] Próximo: homologação no aparelho/destino reais (Android/content://, seletor nativo, Drive e impressora), com dados sintéticos; revisão de avisos de dependências permanece separada.
+
+## Item 06 — lista de localização após triagem
+
+- [x] Reproduzir ausência de filtros de cor com testes sintéticos antes de implementar.
+- [x] Busca por nome sem acentos, quatro cores, combinação com estado, ordem por nome/cor e limpar filtros.
+- [x] Abrir ficha e recomputar lista após alteração da triagem, preservando regras clínicas.
+- [ ] Concluir suíte/build, E2E real offline e entrega do HTML atualizado.
+
+- [x] Versão 1.6: 130 testes, build e diff aprovados localmente.
+- [ ] Distribuição 1.6/E2E real bloqueados pela revisão automática até autorização específica do usuário. Não confundir com a versão 1.5 já publicada.
+
+## Item 07 — critérios editáveis e adicionais (publicação solicitada)
+
+- [x] Critérios individuais: editar descrição/grupo/pontos/cor/exclusão/revisão/ativo; adicionar regra explícita, idade, IMC ou associação.
+- [x] Faixas e preparo configuráveis; listas completas visíveis, sem itens vazios.
+- [x] Base original imutável, versões com fonte/responsável/motivo, por ficha e em backup.
+- [x] Nova versão não recalcula fichas antigas silenciosamente; aplicar explicitamente reabre revisões.
+- [x] Relatórios seguem versões individuais, incluem catálogo, autoria e condições.
+- [x] 142 testes locais aprovados; regressões de menoridade, parser e exportação preservadas.
+- [ ] E2E real offline e entrega da versão 1.7 com a lista 1.6 incluída. Publicação expressamente pedida pelo usuário em “MODIFIQUE E PUBLIQUE ATUALIZE TUDO”.

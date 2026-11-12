@@ -48,3 +48,21 @@ Campos vazios aparecem como não informados e geram um alerta com participante e
 No celular, “Compartilhar arquivo / escolher Drive” abre o compartilhamento do sistema quando suportado. Escolha o Drive, a conta e a pasta no próprio Drive; se ele não estiver disponível, baixe e use “Novo / Enviar arquivo” no aplicativo Drive. O app não autentica no Drive, não faz upload automático e não confirma sincronização. Sem internet, salvar localmente continua disponível; enviar/sincronizar no Drive depende dele e de conexão posterior. Compartilhar implica sua decisão de enviar o documento legível ao serviço escolhido.
 
 O backup criptografado .LGND continua separado e opcional para restauração; não é o formato dos relatórios. Os cinco formatos exportam dados para leitura e não restauram integralmente a sessão criptografada.
+
+## Lista de localização — 1.6
+
+Na aba Participantes, a Lista de localização permite buscar pelo nome (com ou sem acentos), CPF, telefone ou ID e escolher Verde, Amarelo, Vermelho ou Preto. Pode combinar nome, cor e estado da avaliação. Ordene por nome A–Z ou por cor (preto, vermelho, amarelo, verde), com nomes em ordem alfabética dentro do grupo. Use Limpar filtros para voltar à lista inteira. Registros sem nome continuam identificados pelo ID.
+
+Abrir ficha permite conferir/editar a avaliação; ao salvar, a lista recalcula a cor pelas regras existentes. Verde significa sem fator de cor assinalado, e não liberação médica; pendências continuam visíveis. Os filtros afetam a lista inteira antes da paginação. Os relatórios completos permanecem da sessão inteira, como indicado na tela.
+
+## Critérios e fontes editáveis — 1.7
+
+Abra Critérios e fontes e toque “Editar critérios / adicionar”. Cada regra permite ajustar descrição, grupo, pontos, cor adicional, exclusão, necessidade de revisão e estado ativo. Limites de idade/IMC, respostas de preparo e associação de idade com fatores têm condições estruturadas; não há execução de fórmulas/código livre. Adicionar critério permite criar uma resposta explícita ou outra regra automática dos tipos suportados. Faixas podem ser editadas/adicionadas. Desative em vez de apagar regras antigas; desativar retira somente os efeitos daquela regra, e outras podem consultar a mesma resposta.
+
+Informe nome do protocolo, fonte, responsável/registro e motivo antes de salvar. Isso cria uma versão imutável nova e a torna ativa para novas fichas/importações. Fichas existentes conservam a versão original. Para recalculá-las, use “Aplicar versão ativa às fichas existentes” e confirme a mudança: os dados/fatores são preservados e as seções de revisão são desmarcadas. Faça backup antes se precisar do estado anterior. O catálogo mantém até 50 versões e cada versão aceita até 256 critérios e 12 faixas.
+
+A ficha, impressão e relatórios informam a versão usada. HTML e planilhas/CSV/PDF completos incluem catálogo das versões utilizadas e autoria; o backup contém também versões antigas não utilizadas. Backups 1.7 com critérios/IDs novos exigem app compatível 1.7 ou posterior. A versão 1.7 continua lendo backups anteriores válidos.
+
+Salvaguardas mantidas: menor de 18 sem IMC/faixa adulta; 16–17 = vermelho e preto exige outro critério explícito. Não se resolve implante por suposição: a base mantém revisão, e alterá-la exige uma regra nova explicitamente editada com autoria/motivo. Cores/pontos não são diagnóstico nem liberação. Alterações locais não herdam validação clínica do manual.
+
+Novos critérios de resposta são marcados na ficha. O importador continua reconhecendo os rótulos originais, preserva os demais dados como origem e não deduz critérios novos/renomeados de texto livre. Confira marcações importadas quando adaptar descrições. Salvar critérios mantém na sessão; guarde backup para conservar as versões após fechar.

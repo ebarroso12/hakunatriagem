@@ -93,3 +93,19 @@ Implementação publicada e validada no commit 431cb85fadc6313849401edd6bd9bee41
 Download direto HTTP 200, Content-Disposition attachment; 13.825.839 bytes. SHA-256 público e local idênticos: e46c7d455c178f9f0b0468db3434b0ed5bb7171625f788fcee034a21a3ed254e. URL: https://github.com/ebarroso12/hakunatriagem/releases/download/html-431cb85fadc6/Triagem-Hakunas-Corrigida.html
 
 Foram enviados somente código do app vazio, dependências/fontes livres e testes sintéticos, sem participantes reais, relatórios de saúde ou emblemas pessoais. Autorização específica resolveu o bloqueio anterior; registros anteriores são históricos. Não houve atualização do site hospedado. Pendentes: homologação Android físico/content://, seletor nativo real, Drive real/conta/pasta/sincronização e impressora física. Drive depende de escolha explícita pelo sistema/aplicativo Drive e conexão para sincronizar.
+
+## Versão 1.6 — lista de localização
+
+Causa: a lista 1.5 possuía busca simples e filtro de estado, sem selecionar individualmente as quatro cores. Adicionado módulo src/participant-list.js com busca normalizada, combinação de estado/cor e ordenação estável; interface mostra lista de localização, seletor de cor/ordem e limpar filtros. Regras de evaluate não foram alteradas, e os relatórios continuam incluindo toda a sessão. Testes sintéticos de módulo/UI cobrem quatro cores, combinação, acentos, nome ausente, mais de uma página e atualização após editar ficha. E2E real atualizado.
+
+### Distribuição 1.6 pendente de autorização
+
+HTML local pronto: SHA-256 0bfb29289af400a71957c86aee2c861142c41d0ddc2f75d07a716993ae608d55. A revisão automática rejeitou github_create_tree: a autorização explícita existente cobria somente a versão 1.5; instruções retidas proíbem uploads posteriores sem autorização específica. Pedido enviado ao usuário para publicar somente o app vazio 1.6. Nenhuma árvore/commit 1.6 criada por essa tentativa e nenhum dado pessoal enviado. Não tentar outro canal para contornar a rejeição. E2E real da 1.6 ainda não executado; o link público permanece 1.5.
+
+Próximo passo após autorização: renovar payload com estado local final, publicar na origem canônica com lease, executar CI offline e verificar download/attachment/hash. Android físico, seletor nativo, Drive e impressora continuam sem homologação.
+
+## Versão 1.7 — critérios configuráveis, lista 1.6 incluída
+
+Pedido explícito de modificar e publicar. Regras passaram de constantes somente leitura para perfis validados, imutáveis e versionados, com autoria/fonte/motivo. src/default-groups.js conserva as definições originais; src/criteria.js valida catálogo e resolve versão por ficha; core recebe o perfil sem alterar o contrato original. src/criteria-editor.js fornece edição/adição e tabelas completas. Aplicar versão a fichas existentes é explícito e reabre revisões. Configurações/backup preservam catálogo; relatórios usam a versão de cada ficha e incluem regras e autoria.
+
+142 testes locais aprovados. E2E atualizado para editar pontos, criar critério, conservar resultado antigo, aplicar versão explicitamente, exportar e restaurar catálogo com critério personalizado. Lista de localização por nome/cores 1.6 está incluída. Sem dados reais nos testes ou na distribuição. Publicação/E2E reais em andamento, não confundir com o HTML público 1.5 anterior.

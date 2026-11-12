@@ -1,4 +1,4 @@
-# Regressão 1.5: documento opaco solicita impressão e confirma por mensagem autenticada.
+# Regressão 1.7: edição/versionamento de critérios, aplicação explícita e backup offline.
 name: Entregar HTML baixável
 on:
   workflow_dispatch:
@@ -32,5 +32,5 @@ jobs:
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" dist/Triagem-Hakunas-Corrigida.html --clobber --repo "$GITHUB_REPOSITORY"
           else
-            gh release create "$tag" dist/Triagem-Hakunas-Corrigida.html --target "$GITHUB_SHA" --title 'Triagem Hakunas — HTML offline corrigido' --notes 'Arquivo HTML único offline. Versão 1.5: relatórios completos e faltantes em XLSX, CSV, ODS, PDF real ou HTML; impressão visível, alertas de lacunas por participante e seleção de destino. Drive depende do seletor/compartilhamento do sistema, sem upload automático. Gerado após testes e E2E em Chromium offline, somente dados fictícios; sem homologação Android físico, diálogo nativo de salvar, Drive real ou impressora.' --latest --repo "$GITHUB_REPOSITORY"
+            gh release create "$tag" dist/Triagem-Hakunas-Corrigida.html --target "$GITHUB_SHA" --title 'Triagem Hakunas — HTML offline corrigido' --notes 'Arquivo HTML único offline. Versão 1.7: critérios editáveis/adicionais, faixas, cores, exclusões e regras automáticas com autoria e versões preservadas; lista de localização com busca por nome, filtro verde/amarelo/vermelho/preto e ordenação; relatórios completos e faltantes em XLSX, CSV, ODS, PDF real ou HTML; impressão visível, alertas de lacunas por participante e seleção de destino. Drive depende do seletor/compartilhamento do sistema, sem upload automático. Gerado após testes e E2E em Chromium offline, somente dados fictícios; sem homologação Android físico, diálogo nativo de salvar, Drive real ou impressora.' --latest --repo "$GITHUB_REPOSITORY"
           fi
