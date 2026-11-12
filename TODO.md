@@ -93,3 +93,17 @@ Um item de implementação por execução. Não instalar skills, commitar, envia
 - [x] Site privado atualizado para 1.7, deployment appgdep_6af519c4dd28819180e2e7318c7bcd00 succeeded; pendências de aparelhos/destinos reais continuam separadas.
 
 - [x] Entrega conjunta 1.7 concluída também no site, preservando acesso privado e sem dados pessoais.
+
+## Item 08 — auditoria sistemática da última versão
+
+- [ ] Inventariar funções, ler fluxos e executar regressões, distinguindo inspeção/teste/simulação/aparelho real.
+- [ ] Reproduzir e corrigir validação de preparo e calculadoras, impressão/exportação, imagens/pacotes e operações assíncronas.
+- [ ] Verificar legibilidade/visibilidade dos botões no celular e conteúdo dos documentos de impressão e cinco formatos.
+- [ ] Verificar versão dos critérios e identidade do TOP nos arquivos; manter limitações explícitas.
+- [ ] Entregar correções verificadas e relatório de auditoria com evidências, sem prometer ausência universal de erros.
+
+- [x] Auditoria 1.8 local: 189 testes; inventário e correções em docs/AUDITORIA-1.8.md.
+- [ ] Executar E2E 1.8, verificar download/hash, atualizar site e registrar resultado, sem dados pessoais.
+
+- [x] Verificação local 1.8: 189 testes e build; auditoria de dependências sem alertas conhecidos; inventário em AUDITORIA-1.8.md.
+- [ ] Publicação e E2E remotos 1.8 dependem de autorização específica após rejeição automática. Não apresentar o link 1.7 como correção 1.8.

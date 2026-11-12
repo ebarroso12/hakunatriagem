@@ -1,0 +1,7 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {validate,evaluate,groups} from '../src/core.js';
+const base=()=>({id:crypto.randomUUID(),name:'Pessoa sintética',age:'40',weight:'80',height:'178',flags:[],reviewed:Object.keys(groups),activity:'0',walk:'0',tetanus:'0',prior:'0',certificate:true,reviewer:'CRM sintético'});
+for(const value of [false,true,' ','0e0','0.0','00'])test('Preparo inválido não se transforma em resposta zero: '+JSON.stringify(value),()=>{const p={...base(),walk:value};assert.throws(()=>validate(p),/Preparação/);assert.equal(evaluate(p).band,null);});
+test('Respostas canônicas zero e ausência mantêm significados diferentes',()=>{assert.equal(evaluate({...base(),walk:0}).band,'Baixa');assert.equal(evaluate({...base(),walk:'0'}).band,'Baixa');assert.equal(evaluate({...base(),walk:''}).band,null);});
+test('IMC matemático 30 não pontua por ruído de ponto flutuante',()=>{const r=evaluate({...base(),weight:'86.7',height:'170'});assert.equal(r.score,0);assert.equal(r.color,'green');});
+test('IMC matemático 40 não exclui por ruído de ponto flutuante',()=>{const r=evaluate({...base(),weight:'78.4',height:'140'});assert.equal(r.score,2);assert.ok(!r.exclusions.includes('IMC > 40'));});
+test('IMC realmente acima ou abaixo de 30 preserva comparação estrita',()=>{assert.equal(evaluate({...base(),weight:'86.700001',height:'170'}).score,2);assert.equal(evaluate({...base(),weight:'86.699999',height:'170'}).score,0);assert.ok(evaluate({...base(),weight:'78.400001',height:'140'}).exclusions.includes('IMC > 40'));});

@@ -66,3 +66,15 @@ A ficha, impressão e relatórios informam a versão usada. HTML e planilhas/CSV
 Salvaguardas mantidas: menor de 18 sem IMC/faixa adulta; 16–17 = vermelho e preto exige outro critério explícito. Não se resolve implante por suposição: a base mantém revisão, e alterá-la exige uma regra nova explicitamente editada com autoria/motivo. Cores/pontos não são diagnóstico nem liberação. Alterações locais não herdam validação clínica do manual.
 
 Novos critérios de resposta são marcados na ficha. O importador continua reconhecendo os rótulos originais, preserva os demais dados como origem e não deduz critérios novos/renomeados de texto livre. Confira marcações importadas quando adaptar descrições. Salvar critérios mantém na sessão; guarde backup para conservar as versões após fechar.
+
+## Impressão e correções — 1.8
+
+O botão 🖨 Imprimir fica fixo na barra superior. Ele abre as opções de impressão; “Abrir prévia para conferir e imprimir” abre o relatório em outra aba, com seu próprio botão Imprimir / salvar PDF. Se o navegador/WebView não oferecer impressão, escolha PDF e salve/abra no leitor do aparelho. A solicitação não comprova impressão física. O número da versão aparece no topo para diferenciar arquivos antigos.
+
+Na ficha, Imprimir / PDF usa o conteúdo aberto, inclusive alterações ainda não salvas, e deixa isso explícito. Mostra ID da pessoa, respostas de preparação, estado das revisões e componentes abertos. Para exportar a sessão, salve a avaliação antes; o relatório da sessão usa só dados salvos e inclui todos os registros, independentemente da busca. Emblemas do relatório são elementos gráficos de primeiro plano para não depender da opção de imprimir fundos.
+
+Foram corrigidos limites numéricos de IMC (erro IEEE-754 em 30/40 e nas categorias), dados de preparo inválidos, calculadoras com NaN, acentos/zeros na leitura de texto, alinhamento de DOCX/ODT, limites gerais de importação, pacotes ZIP duplicados, PNGs inválidos e operações assíncronas de backup/restore. Textos corrigidos preservam o arquivo de origem e indicam a representação conferida. Restauração é cancelada ao fechar seu formulário.
+
+CSV UTF-8 sem BOM, UTF-16 LE/BE e Windows-1252 passam pela decodificação antes da tabela, sem converter identificadores textuais em números. As verificações estruturais de CPF/telefone continuam sem consulta a cadastro e sem reconstruir dígitos por suposição.
+
+Veja AUDITORIA-1.8.md para o inventário, evidências e limites. Nenhuma versão é uma promessa de ler todo layout/arquivo, de reconhecer todo OCR ou de homologação em qualquer celular/Drive/impressora. Salve backup antes de trocar de arquivo; critérios originais, versões e salvaguardas etárias permanecem.

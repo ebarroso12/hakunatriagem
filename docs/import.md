@@ -40,3 +40,9 @@ Nome e demais campos ausentes deixam de interromper a importação/cadastro. Reg
 Campos vazios conhecidos guardam a posição de origem quando disponível. O arquivo de origem é incluído na referência. Marcadores explícitos de ausência são normalizados para vazio com a fonte preservada. Não, false e zero não são ausência. Dados preenchidos inválidos continuam bloqueantes de modo atômico; não são convertidos em vazio para forçar aceitação.
 
 A ausência não produz fator clínico negativo nem faixa final artificial. Os relatórios abrangem todos os registros efetivamente salvos na sessão, independentemente da busca/paginação, e discriminam ausência de campo, revisão não feita e documento não conferido.
+
+## Auditoria 1.8
+
+Texto CSV/TSV/TXT é lido após decodificação UTF-8/UTF-16/Windows-1252 e com valores textuais preservados, inclusive zeros de identificadores. DOCX gridSpan e ODT com repetições/mesclagens respeitam o alinhamento e os limites de expansão. Entradas ZIP duplicadas são rejeitadas antes de selecionar conteúdo. Limites de 200 tabelas e 50.000 linhas totais valem para todos os formatos, não só planilhas. Reanálise manual identifica o arquivo e “Texto conferido”; não afirma coordenada física original depois da edição.
+
+Testes usam arquivos sintéticos reais XLSX, XLSM, XLSB, XLS, ODS, CSV, TXT e XML Spreadsheet, além de DOCX/ODT/HTML/JSON/PDF/OCR nos fluxos próprios. Isso não homologa todos os layouts, todas as codificações ou macros. Macros não são executadas.

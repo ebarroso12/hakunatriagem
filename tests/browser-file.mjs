@@ -1,7 +1,8 @@
 // Regressão do HTM real, com dados sintéticos. Não publica nem acessa rede.
 import {chromium} from '@playwright/test';
 import * as XLSX from 'xlsx';
-import {createCanvas} from '@napi-rs/canvas';
+import {createCanvas,DOMMatrix,ImageData,Path2D} from '@napi-rs/canvas';
+import {jsPDF} from 'jspdf';
 import {decrypt} from '../src/vault.js';
 import {validateBackup} from '../src/core.js';
 import assert from 'node:assert/strict';
@@ -17,6 +18,7 @@ page.on('pageerror',e=>errors.push(e.message));
 page.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});
 try{
   await page.goto(pathToFileURL(resolve('dist/triagem-hakunas.htm')).href,{waitUntil:'domcontentloaded',timeout:15000});
+  assert.equal(await page.locator('.topbar #print-report').count(),1);assert.match(await page.locator('#app-version').innerText(),/1\.8/);
   await page.locator('[data-tab=settings]').click();
   await page.locator('[name=topNumber]').fill('01782');await page.locator('[name=location]').fill('Local sintético');await page.locator('[name=baseName]').fill('Base sintética');
   const logoCanvas=createCanvas(100,100),logoCtx=logoCanvas.getContext('2d');logoCtx.fillStyle='#cc7034';logoCtx.fillRect(0,0,100,100);logoCtx.fillStyle='white';logoCtx.font='40px sans-serif';logoCtx.fillText('TEST',5,60);
@@ -34,8 +36,9 @@ try{
   await page.locator('[data-tab=people]').click();
   await page.locator('#new').click();
   for(const [key,value]of Object.entries({name:'Menor sintético',age:'17',weight:'80',height:'1,78'}))await page.locator(`[name=${key}]`).fill(value);
+  for(const key of ['activity','walk','tetanus','prior'])await page.locator(`[name=${key}]`).selectOption(key==='activity'?'3':key==='prior'?'1':'0');
   await page.getByRole('button',{name:'Salvar avaliação',exact:true}).click();
-  await page.locator('[data-edit]').click();
+  const firstID=await page.locator('[data-edit]').getAttribute('data-edit');await page.locator('[data-edit]').click();await page.locator('[name=notes]').fill('Rascunho de impressão sintético');
   assert.equal(await page.locator('[name=height]').inputValue(),'178');
   assert.equal(await page.locator('#record-result .pill.red').count(),1);
   assert.match(await page.locator('#record-result').innerText(),/faixa final não calculável/);
@@ -46,10 +49,11 @@ try{
   assert.ok(await page.evaluate(()=>window.__printRequested));assert.match(await page.locator('#print-sheet .event-title').innerText(),/TOP 01782/);
   await page.emulateMedia({media:'print'});
   const pdf=await page.pdf({path:'test-results/menor-sintetico.pdf',format:'A4'});
-  assert.equal(pdf.subarray(0,4).toString(),'%PDF');
+  assert.equal(pdf.subarray(0,4).toString(),'%PDF');Object.assign(globalThis,{DOMMatrix,ImageData,Path2D});globalThis.pdfjsWorker=await import('pdfjs-dist/build/pdf.worker.min.mjs');const{getDocument,OPS}=await import('pdfjs-dist/legacy/build/pdf.mjs');const paper=await getDocument({data:new Uint8Array(pdf),useSystemFonts:false}).promise;let paperText='';for(let n=1;n<=paper.numPages;n++)paperText+=(await(await paper.getPage(n)).getTextContent()).items.map(i=>i.str).join(' ')+' ';assert.match(paperText,/Menor sintético/);assert.ok(paperText.includes(firstID));assert.match(paperText,/Respostas de preparação/);assert.match(paperText,/Não realiza/);assert.match(paperText,/ainda não salvas/);await paper.destroy();
   await page.emulateMedia({media:'screen'});
   await page.evaluate(()=>dispatchEvent(new Event('afterprint')));
   await page.locator('#close-modal').click();
+  await page.evaluate(()=>scrollTo(0,900));let printBox=await page.locator('.topbar #print-report').boundingBox();assert.ok(printBox&&printBox.y>=0&&printBox.y+printBox.height<844);await page.locator('#print-report').click();assert.match(await page.locator('#modal h2').innerText(),/Imprimir/);assert.ok(await page.locator('#report-print').isVisible());const previewReady=page.waitForEvent('popup');await page.locator('#report-preview').click();const preview=await previewReady;await preview.waitForLoadState('domcontentloaded');assert.equal(await preview.locator('article.record').count(),1);assert.match(await preview.locator('body').innerText(),/Menor sintético/);assert.ok(!(await preview.locator('body').innerText()).includes('Rascunho de impressão sintético'));const reportPaper=await preview.pdf({path:'test-results/previa-sem-fundos-sintetica.pdf',format:'A4',printBackground:false}),reportDoc=await getDocument({data:new Uint8Array(reportPaper),useSystemFonts:false}).promise;const foreground=(await(await reportDoc.getPage(1)).getOperatorList()).fnArray;assert.ok(foreground.some(op=>[OPS.paintImageXObject,OPS.paintInlineImageXObject,OPS.paintImageXObjectRepeat].includes(op)),'Emblemas devem estar no primeiro plano do PDF sem fundos.');await reportDoc.destroy();await preview.close();await page.locator('#close-modal').click();await page.evaluate(()=>scrollTo(0,0));
   await page.setViewportSize({width:320,height:844});
   await page.locator('#import').click();
   const ws=XLSX.utils.aoa_to_sheet([['Nome','CPF','Telefone','Idade'],['Teste numérico sintético',52998224725,11987654321,40]]),wb=XLSX.utils.book_new();
@@ -95,7 +99,7 @@ try{
   const completeFile=await completeReady;await completeFile.saveAs('test-results/relatorio-completo-sintetico.html');
   const fullHTML=await readFile('test-results/relatorio-completo-sintetico.html','utf8');
   assert.equal((fullHTML.match(/<article class="record"/g)||[]).length,6);
-  assert.match(fullHTML,/Nome não informado/);assert.match(fullHTML,/TOP 01782/);assert.match(fullHTML,/Base sintética/);assert.ok(completeFile.suggestedFilename().includes('TOP-01782'));
+  assert.ok(!fullHTML.includes('Rascunho de impressão sintético'));assert.match(fullHTML,/Nome não informado/);assert.match(fullHTML,/TOP 01782/);assert.match(fullHTML,/Base sintética/);assert.ok(completeFile.suggestedFilename().includes('TOP-01782'));
   await page.locator('#report-format').selectOption('xlsx');const missingReady=page.waitForEvent('download');await page.locator('#report-missing').click();
   const missingFile=await missingReady;await missingFile.saveAs('test-results/dados-faltantes-sinteticos.xlsx');
   const missingWB=XLSX.read(await readFile('test-results/dados-faltantes-sinteticos.xlsx'),{type:'buffer'});
@@ -148,9 +152,12 @@ try{
   await page.locator('#reports').click();await page.locator('#report-readable-consent').check();await page.locator('#report-destination').selectOption('download');await page.locator('#report-format').selectOption('html');let readyCriteria=page.waitForEvent('download');await page.locator('#report-complete').click();const criteriaReport=await readyCriteria;await criteriaReport.saveAs('test-results/criterios-sinteticos.html');const criteriaHTML=await readFile('test-results/criterios-sinteticos.html','utf8');assert.match(criteriaHTML,/Protocolo sintético E2E/);assert.match(criteriaHTML,/Critério sintético E2E/);assert.equal((criteriaHTML.match(/<article class="record"/g)||[]).length,8);await page.locator('#close-modal').click();
   await page.locator('#backup').click();await page.locator('#password').fill('senha-sintetica-123');await page.locator('#password-confirm').fill('senha-sintetica-123');readyCriteria=page.waitForEvent('download');await page.locator('#backup-form button').click();const criteriaBackup=await readyCriteria;await criteriaBackup.saveAs('test-results/criterios-sinteticos.LGND');const backupData=await decrypt(await readFile('test-results/criterios-sinteticos.LGND','utf8'),'senha-sintetica-123');validateBackup(backupData);assert.equal(backupData.settings.criteria.profiles.length,2);assert.ok(backupData.participants.every(p=>p.criteriaVersion===backupData.settings.criteria.active));assert.ok(backupData.participants.some(p=>p.flags.includes(customID)));
   await page.locator('[data-tab=shield]').click();page.once('dialog',d=>d.accept());await page.locator('#clear').click();await page.locator('#restore').click();await page.locator('#restore-file').setInputFiles('test-results/criterios-sinteticos.LGND');await page.locator('#restore-password').fill('senha-sintetica-123');page.once('dialog',d=>d.accept());await page.locator('#restore-form button').click();await page.waitForFunction(()=>!document.querySelector('#modal').open);await page.locator('[data-tab=book]').click();assert.match(await page.locator('.content').innerText(),/Critério sintético E2E/);await page.locator('[data-tab=people]').click();await page.locator('#clear-list-filters').click();assert.equal(await page.locator('[data-edit]').count(),8);
-  for(const width of [390,320]){await page.setViewportSize({width,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
+  await page.locator('[data-tab=calc]').click();await page.locator('[name=age]').fill('40');await page.locator('[name=weight]').fill('texto');await page.locator('[name=height]').fill('178');await page.locator('#calc-form button').click();assert.equal(await page.locator('#calc-result .error').count(),1);assert.ok(!(await page.locator('#calc-result').innerText()).includes('NaN'));await page.locator('[data-tab=people]').click();
+  const inputPDF=new jsPDF();inputPDF.text('Nome',20,20);inputPDF.text('Idade',110,20);inputPDF.text('Pessoa PDF Sintetica',20,35);inputPDF.text('40',110,35);await page.locator('#import').click();await page.locator('#import-file').setInputFiles({name:'entrada-sintetica.pdf',mimeType:'application/pdf',buffer:Buffer.from(inputPDF.output('arraybuffer'))});await page.locator('#confirm-import').waitFor({timeout:30000});await page.locator('#confirm-source-review').check();await page.locator('#confirm-import').click();assert.equal(await page.locator('[data-edit]').count(),9);
+  const ocrCanvas=createCanvas(1100,370),ocrContext=ocrCanvas.getContext('2d');ocrContext.fillStyle='white';ocrContext.fillRect(0,0,1100,370);ocrContext.fillStyle='black';ocrContext.font='34px sans-serif';for(const [i,text]of ['Nome: Participante Sintetico','Idade: 40','Peso: 80 kg','Altura: 178 cm'].entries())ocrContext.fillText(text,40,60+i*75);await page.locator('#import').click();await page.locator('#import-file').setInputFiles({name:'ocr-sintetico.png',mimeType:'image/png',buffer:ocrCanvas.toBuffer('image/png')});await page.locator('#confirm-import').waitFor({timeout:60000});assert.match(await page.locator('#import-status').innerText(),/OCR local utilizado/);await page.locator('#confirm-source-review').check();await page.locator('#confirm-import').click();assert.equal(await page.locator('[data-edit]').count(),10);
+  for(const width of [390,320]){await page.setViewportSize({width,height:844});await page.evaluate(()=>scrollTo(0,900));printBox=await page.locator('.topbar #print-report').boundingBox();assert.ok(printBox&&printBox.y>=0&&printBox.y+printBox.height<844);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
   await page.screenshot({path:'test-results/file-mobile-sintetico.png',fullPage:true});
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
-  console.log('E2E file:// aprovado: edição/adição/versionamento de critérios, aplicação explícita e backup/restore do catálogo, localização por nome sem acentos/quatro cores e ordenação, cabeçalho de TOP e logos locais, fonte incorporada offline, cadastro, menor vermelho, CPF/telefone e prévia automática móvel offline, mapeamento, vazios e nomes ausentes, dois relatórios nos cinco formatos offline, seletor/cancelamento simulados e impressão do relatório completo, importação atômica, chamada de impressão/PDF headless, backup/restore e viewport 390/320. Somente dados sintéticos.');
+  console.log('E2E file:// aprovado: impressão superior visível, prévia real e PDF de impressão lido, calculadora inválida recusada, importação PDF e OCR em navegador offline, edição/adição/versionamento de critérios, aplicação explícita e backup/restore do catálogo, localização por nome sem acentos/quatro cores e ordenação, cabeçalho de TOP e logos locais, fonte incorporada offline, cadastro, menor vermelho, CPF/telefone e prévia automática móvel offline, mapeamento, vazios e nomes ausentes, dois relatórios nos cinco formatos offline, seletor/cancelamento simulados e impressão do relatório completo, importação atômica, chamada de impressão/PDF headless, backup/restore e viewport 390/320. Somente dados sintéticos.');
 }catch(e){console.error('E2E file:// NÃO CONCLUÍDO: '+e.message);process.exitCode=1;}
 finally{await context.close();await browser.close();}

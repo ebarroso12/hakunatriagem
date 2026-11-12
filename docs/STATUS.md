@@ -125,3 +125,21 @@ Sites atualizado com acesso owner-private preservado. Fonte exata enviada em fas
 A publicação foi efetuada pela skill Sites, com credencial transitória apenas em stdin/memória do subprocesso. O helper de origem padrão não estava instalado; Git ordinário sem força foi usado e a proveniência do archive foi conferida. O resultado nativo succeeded comprova implantação, não testes adicionais de Android ou Drive. Download público GitHub c7556341f9ed continua a entrega offline conferida. Sem alteração de audiência, banco clínico ou envio de registros.
 
 Estado final: critérios editáveis/adicionais e faixas, controle de versão por ficha, aplicação explícita, relatórios auditáveis e lista por nome/cores concluídos. 142 testes e E2E Chromium offline aprovados. Próximos itens: revisão de dependências e homologação em aparelho/destinos reais com dados sintéticos.
+
+## Auditoria 1.8
+
+Ver docs/AUDITORIA-1.8.md: inventário de 490 funções/callbacks em 21 módulos, falhas reproduzidas antes/depois e limites. Corrigidos acesso/conteúdo/emblemas/erros de impressão, IMC nas fronteiras IEEE-754, preparo não canônico, NaN nas calculadoras, codificações/zeros em texto, DOCX/ODT, ZIP duplicado, limites gerais de entrada, PNG inválido, proveniência após reanálise e concorrência/cancelamento de backup/restore. Dependências atualizadas para remover 3 alertas conhecidos.
+
+189 testes locais aprovados, npm audit com zero alertas conhecidos, sintaxe e diff aprovados. Chromium local permanece bloqueado por política para file://; não foi contornado. Scripts de CI foram ampliados para impressão/PDF/preview, OCR real no browser e build hospedado em loopback. Resultados remotos pendentes nesta etapa. Android/Drive/seletor nativo/impressora não homologados.
+
+## Bloqueio de distribuição 1.8
+
+A revisão automática rejeitou github_create_tree para 1.8: considerou as autorizações anteriores específicas por versão e não autorizou a árvore nova com o workflow de publicação de releases. Não contornar por outro canal. Foi solicitada autorização específica para publicar/testar o app vazio 1.8 e atualizar o site privado. Nenhuma árvore/commit 1.8 foi criada por essa tentativa. A publicação/download/site atuais continuam na 1.7.
+
+Verificações concretas concluídas: 189 testes locais, build explícito, sintaxe e diff aprovados; npm audit com zero alertas conhecidos. HTML com nome genérico e Triagem-Hakunas-v1.8.0.html têm SHA-256 idêntico 7dab87af95ddc01b4e4cb525158d8e4ae55ab74eae66df84380e65d913f0756a. Inventário: 490 funções/callbacks em 21 módulos próprios, sem alegar execução de todos os ramos.
+
+Pendentes por esse bloqueio: novos E2E file:// e hosted-audit no Chromium de CI; leitura do PDF de impressão e operações de imagem/emblemas sem fundos no browser; download público 1.8 e atualização do site. Hardware Android/Drive/pasta/impressora continuam sem homologação mesmo quando CI passar.
+
+Ao receber autorização, renovar payload do estado local final (não reutilizar snapshot que antecede este registro), verificar branch/origem/diff, publicar, executar CI, resolver falhas reais e conferir download/hash; só então atualizar o site privado e o fechamento desta auditoria.
+
+Autorização específica recebida: “Sim, publicar e testar a versão 1.8”, incluindo GitHub/CI, download e site privado, somente app vazio e dados fictícios. Bloqueio anterior de envio resolvido; executar e registrar a verificação remota antes da entrega.

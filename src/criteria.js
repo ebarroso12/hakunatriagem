@@ -1,3 +1,4 @@
+import {compareMeasurement} from './measurement-compare.js';
 import {groups} from './default-groups.js';
 export const DEFAULT_CRITERIA_ID='hakunas-original-v1';
 export const groupLabels={history:'Histórico',meds:'Medicamentos',symptoms:'Sintomas',exclusions:'Exclusões',extra:'Fatores adicionais'};
@@ -61,4 +62,4 @@ export function createCriteriaVersion(registry,draft,metadata){const current=nor
 }
 export function profileGroups(profile){const p=normalizeCriteriaProfile(profile);return Object.fromEntries(Object.keys(groupLabels).map(group=>[group,p.rules.filter(r=>r.kind==='flag'&&r.group===group).map(r=>[r.id,r.label,r.active?r.points:0])]));}
 export function ruleCondition(rule){return rule.kind==='flag'?'Resposta explicitamente assinalada':rule.kind==='bmiAbove'?`IMC adulto > ${rule.threshold}`:rule.kind==='ageAbove'?`Idade > ${rule.threshold}`:rule.kind==='ageWithFlags'?`Idade > ${rule.threshold} e um destes fatores: ${rule.flagIds.join(', ')}`:`${preparationLabels[rule.field]} = ${preparationValues[rule.field][rule.value]}`;}
-export function matchingRules(p,profile,bmi,age){const flags=Array.isArray(p.flags)?p.flags:[];return profile.rules.filter(r=>r.active&&(r.kind==='flag'?flags.includes(r.id):r.kind==='bmiAbove'?bmi!==null&&bmi>r.threshold:r.kind==='ageAbove'?Number.isInteger(age)&&age>r.threshold:r.kind==='ageWithFlags'?Number.isInteger(age)&&age>r.threshold&&r.flagIds.some(id=>flags.includes(id)):p[r.field]!==''&&p[r.field]!=null&&+p[r.field]===r.value));}
+export function matchingRules(p,profile,bmi,age){const flags=Array.isArray(p.flags)?p.flags:[];return profile.rules.filter(r=>r.active&&(r.kind==='flag'?flags.includes(r.id):r.kind==='bmiAbove'?bmi!==null&&compareMeasurement(bmi,r.threshold)>0:r.kind==='ageAbove'?Number.isInteger(age)&&age>r.threshold:r.kind==='ageWithFlags'?Number.isInteger(age)&&age>r.threshold&&r.flagIds.some(id=>flags.includes(id)):p[r.field]!==''&&p[r.field]!=null&&+p[r.field]===r.value));}
