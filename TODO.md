@@ -139,5 +139,5 @@ Publicação, CI e download 1.8 concluídos. O sucesso de implantação não acr
 
 - [x] Link com ícone no cabeçalho em todas as páginas; playlist solicitada e nova aba sem referência.
 - [x] Teste sintético falhou antes da implementação e passou depois; ficha preservada ao navegar entre telas.
-- [ ] Encerrar suite/build e E2E, atualizar site privado e download sem alterar audiência.
+- [x] 207 testes/build/E2E Chromium aprovados; site privado e download atualizados e conferidos. Diagnóstico WebKit continua não aprovado.
 - [ ] Reprodução no aplicativo Spotify/aparelhos reais não homologada; offline iPhone permanece pendente do item anterior.
