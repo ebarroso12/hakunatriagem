@@ -146,5 +146,5 @@ Publicação, CI e download 1.8 concluídos. O sucesso de implantação não acr
 
 - [x] Botão com ícone de calçado e link exato informado, ao lado do Spotify no cabeçalho das cinco telas.
 - [x] Teste UI observado falhando antes e passando depois; nova aba, sem referência de origem e ficha preservada.
-- [ ] Encerrar suite/build/E2E, publicar site privado e verificar download.
+- [x] 208 testes/build/E2E Chromium aprovados; site privado atualizado e download conferido. Diagnóstico WebKit continua sem aprovação.
 - [ ] Disponibilidade do produto, redirecionamento/app Shopee e compra não homologados; offline iPhone permanece pendente.
