@@ -134,3 +134,10 @@ Publicação, CI e download 1.8 concluídos. O sucesso de implantação não acr
 - [ ] Confirmar abertura/instalação e modo avião em iPhone/Android físicos; screenshot não comprova execução de código nem identifica causa Android.
 
 - [ ] Offline iPhone: WebKit carrega e confere cache, mas reabertura sem rede falhou (job 131582530000). Validar aparelho/gateway e distribuição; não encerrar como concluído.
+
+## Item — botão Spotify 1.8.2
+
+- [x] Link com ícone no cabeçalho em todas as páginas; playlist solicitada e nova aba sem referência.
+- [x] Teste sintético falhou antes da implementação e passou depois; ficha preservada ao navegar entre telas.
+- [ ] Encerrar suite/build e E2E, atualizar site privado e download sem alterar audiência.
+- [ ] Reprodução no aplicativo Spotify/aparelhos reais não homologada; offline iPhone permanece pendente do item anterior.

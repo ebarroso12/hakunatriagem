@@ -19,6 +19,7 @@ page.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});
 try{
   await page.goto(pathToFileURL(resolve('dist/triagem-hakunas.htm')).href,{waitUntil:'domcontentloaded',timeout:15000});
   assert.equal(await page.locator('.topbar #print-report').count(),1);assert.match(await page.locator('#app-version').innerText(),/1\.8/);
+  assert.equal(await page.locator('.topbar #spotify-praise').getAttribute('href'),'https://open.spotify.com/playlist/4U6wx4BgB1NjmmXBJJD4Sa');assert.equal(await page.locator('#spotify-praise').getAttribute('target'),'_blank');assert.match(await page.locator('#spotify-praise').getAttribute('rel'),/noreferrer/);
   await page.locator('[data-tab=settings]').click();
   await page.locator('#save-format').selectOption('pdf');
   await page.locator('#save-destination').selectOption('onedrive');

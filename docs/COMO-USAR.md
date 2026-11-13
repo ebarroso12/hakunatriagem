@@ -96,3 +96,7 @@ O arquivo HTML é código de aplicativo. Visualizar um anexo pode mostrar apenas
 Para abrir pelo link, use Safari/Chrome com internet e autorização no site restrito. Para preparar um atalho/instalação, use Adicionar à Tela de Início quando disponível. Isso exige uma primeira abertura online e não garante offline: teste no aparelho com dados fictícios e modo avião antes de depender dele. O cache não guarda suas fichas; guarde backup antes de fechar. Não houve homologação física iOS/Android ou do cache através do gateway privado.
 
 Em **Abrir no celular → Verificar preparo offline neste navegador**, o app consulta os recursos estáticos guardados da versão atual. Cache antigo, incompleto ou com tela de login no lugar do app não confirma preparo. Se informar recursos conferidos, ainda faça o teste real em modo avião por meio do ícone, com sessão vazia e backup anterior. Essa consulta não salva participantes nem habilita JavaScript no visualizador do iPhone.
+
+## 1.8.2 — Ouvir louvores
+
+No alto do cabeçalho, toque em **Ouvir louvores**, ao lado das ações de impressão/exportação. O link abre a playlist indicada no Spotify em nova aba ou no aplicativo, conforme o aparelho. O som é controlado pelo Spotify; não há player embutido, reprodução automática ou envio de informações da triagem. O link usa a URL canônica da playlist, sem parâmetros de rastreamento e sem referência da página. O acesso à música depende do Spotify, da conta e da disponibilidade da playlist.

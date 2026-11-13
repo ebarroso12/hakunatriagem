@@ -205,3 +205,9 @@ Release html-ee04c8646276, commit público ee04c86462769ccac15a131593f773b30a9cc
 Download confirmado HTTP 200, Content-Disposition attachment, 13.944.497 bytes; SHA-256 remoto e local iguais: 7e3a204d2d424f8dc4cb06cacc06d476fef7dff8b5928a62891ff13436d37b0d. Link: https://github.com/ebarroso12/hakunatriagem/releases/download/html-ee04c8646276/Triagem-Hakunas-v1.8.1.html
 
 Site privado succeeded já registrado acima; código de produção idêntico ao da release, commits finais públicos posteriores alteram testes/docs/workflow. Preferências Google Drive/OneDrive pelo aparelho e os cinco formatos foram entregues. As falhas de WebKit e a preparação iOS continuam abertas, não foram ocultadas nem convertidas em homologação. Próximo item: reproduzir a reabertura em iPhone físico pelo ícone e verificar o gateway; avaliar a distribuição adequada se houver exigência de primeira abertura totalmente offline.
+
+## Botão Spotify 1.8.2
+
+Pedido: ícone/botão no alto do cabeçalho para a playlist 4U6wx4BgB1NjmmXBJJD4Sa. Link canônico, sem parâmetros de rastreamento, target _blank e rel noopener/noreferrer; SVG local, sem player, autoplay, scripts Spotify ou requisições automáticas. Preserva a sessão de triagem.
+
+Teste sintético UI falhou antes e passou depois em todas as páginas; 207/207 testes locais aprovados, build e diff aprovados. E2E real CI ampliado para presença/destino/atributos do botão; reprodução/conta/aplicativo Spotify real não testados. Sem mudança nas limitações de offline iOS. Publicação e E2E remoto pendentes neste ponto.
