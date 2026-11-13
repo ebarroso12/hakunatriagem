@@ -126,9 +126,11 @@ Publicação, CI e download 1.8 concluídos. O sucesso de implantação não acr
 
 - [x] Configuração opcional de destino Google Drive/OneDrive pelo aparelho, conforme resposta Windows/iOS; cinco formatos nos dois relatórios.
 - [x] Cancelamento/indisponibilidade sem download oculto; sem autenticação/upload automático ou confirmação falsa.
-- [ ] Encerrar suite/build/CI, conferir download e atualizar site privado mantendo audiência.
+- [x] Encerrar 206 testes/build e Chromium, conferir download e atualizar site privado mantendo audiência; diagnóstico WebKit falhou e não foi contado como homologação.
 - [ ] Homologação com contas/aparelhos reais Windows e iOS; sem dados reais nos testes de desenvolvimento.
 
 - [x] Reproduzir corpo vazio sem JavaScript; acrescentar orientação estática e ajuda de abertura, sem alegar correção de Quick Look.
 - [x] Preparar ícones PNG/metadados Apple e regressão Chromium/WebKit mobile; resultado CI ainda pendente.
 - [ ] Confirmar abertura/instalação e modo avião em iPhone/Android físicos; screenshot não comprova execução de código nem identifica causa Android.
+
+- [ ] Offline iPhone: WebKit carrega e confere cache, mas reabertura sem rede falhou (job 131582530000). Validar aparelho/gateway e distribuição; não encerrar como concluído.

@@ -195,3 +195,13 @@ Deploy appgdep_6af651dcc6748191860c8833eda140f5 retornou succeeded em 12/11/2026
 Publicação entrega preferências e canais verificados, com aviso explícito de iOS offline não homologado. Não equivale à solução da limitação do arquivo local em iPhone nem à aprovação do diagnóstico WebKit.
 
 Quarto ensaio ff2fc22: 206 testes aprovados, mas a regressão Chromium parou no assert de ID literal em texto extraído do PDF (firstID); o diagnóstico WebKit e a release não foram executados. O mesmo código de produção passou esse fluxo nas três execuções anteriores. A comparação agora remove somente whitespace de extração antes de exigir todos os caracteres do UUID em ordem; não remove hífens nem aceita ID incompleto, e registra trecho sintético no erro. Isso evita tratar separadores/linhas do PDF como perda de ID; a hipótese específica do quarto PDF não pôde ser confirmada porque o arquivo não foi anexado ao job. Sem mudança de conteúdo ou de impressão na produção. Validar novamente antes de anunciar novo download.
+
+## Resultado final — entrega 1.8.1
+
+Release html-ee04c8646276, commit público ee04c86462769ccac15a131593f773b30a9cc0cb. Execução 43333135944, job 131582530000. 206/206 testes e etapas obrigatórias Chromium aprovados: file://, OCR/importação, relatórios, impressão/PDF, cache conferido e aba fechada/reaberta sem rede em loopback.
+
+**Diagnóstico WebKit falhou (exit code 1):** carga inicial e conferência do cache foram concluídas; depois de desligar a rede/fechar a aba, page.goto na reabertura retornou erro interno. A etapa tem continue-on-error; seu campo conclusion e o job geral aparecem success, mas isso NÃO significa aprovação WebKit. O log literal registra a falha. Arquivo local WebKit já havia falhado nos ensaios anteriores. Offline iPhone NÃO concluído/homologado. Não há iOS/Android físico, gateway privado offline, Drive/OneDrive real ou impressora homologados.
+
+Download confirmado HTTP 200, Content-Disposition attachment, 13.944.497 bytes; SHA-256 remoto e local iguais: 7e3a204d2d424f8dc4cb06cacc06d476fef7dff8b5928a62891ff13436d37b0d. Link: https://github.com/ebarroso12/hakunatriagem/releases/download/html-ee04c8646276/Triagem-Hakunas-v1.8.1.html
+
+Site privado succeeded já registrado acima; código de produção idêntico ao da release, commits finais públicos posteriores alteram testes/docs/workflow. Preferências Google Drive/OneDrive pelo aparelho e os cinco formatos foram entregues. As falhas de WebKit e a preparação iOS continuam abertas, não foram ocultadas nem convertidas em homologação. Próximo item: reproduzir a reabertura em iPhone físico pelo ícone e verificar o gateway; avaliar a distribuição adequada se houver exigência de primeira abertura totalmente offline.

@@ -8,8 +8,10 @@ Arquitetura: preferência local sem dados pessoais; controles em Configurações
 - [x] Implementar preferências validadas com falha de storage não bloqueante, painel e ajuda por serviço.
 - [x] Preservar bytes/MIME/extensão nos cinco formatos e cancelamento sem download oculto.
 - [x] Executar testes focados, suite, build, diff; registrar limite do Chromium local e contas físicas não homologadas.
-- [ ] Entregar artefato revisável sem afirmar publicação antes de ela ocorrer.
+- [x] Entregar artefato revisável sem afirmar publicação antes de ela ocorrer.
 
 Casos críticos: seletor ausente; compartilhamento incompatível; cancelamento; conta/pasta errada escolhida fora do app; storage file:// indisponível. Não guardar tokens, contas ou dados clínicos nesta preferência.
 
 Resposta do responsável: Windows e iOS; usar o aparelho/computador em que está o app. Não solicitou OAuth direto.
+
+Entrega 1.8.1 concluída para os canais verificados. Offline iPhone continua aberto: diagnóstico WebKit falhou na reabertura; ver docs/SALVAMENTO-1.8.1.md.
