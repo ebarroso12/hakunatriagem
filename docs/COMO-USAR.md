@@ -100,3 +100,7 @@ Em **Abrir no celular → Verificar preparo offline neste navegador**, o app con
 ## 1.8.2 — Ouvir louvores
 
 No alto do cabeçalho, toque em **Ouvir louvores**, ao lado das ações de impressão/exportação. O link abre a playlist indicada no Spotify em nova aba ou no aplicativo, conforme o aparelho. O som é controlado pelo Spotify; não há player embutido, reprodução automática ou envio de informações da triagem. O link usa a URL canônica da playlist, sem parâmetros de rastreamento e sem referência da página. O acesso à música depende do Spotify, da conta e da disponibilidade da playlist.
+
+## 1.8.3 — Ver tênis
+
+No cabeçalho, ao lado de **Ouvir louvores**, o botão **Ver tênis** abre o link Shopee informado pelo responsável em nova aba, mantendo a triagem aberta. Não há checkout ou compra dentro do app, nem carregamento de conteúdo da loja na triagem. O botão não representa avaliação médica ou certificação do produto.

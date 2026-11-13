@@ -17,4 +17,6 @@
 
 .topbar{position:sticky;top:0;z-index:4}.report-print-actions{display:grid;gap:10px;border:1px solid #cad8be;padding:14px;background:#f4f8ee;border-radius:10px}.report-print-actions small{line-height:1.6}#app-version{white-space:nowrap}dialog .modal-head{position:sticky;top:0;z-index:3;background:white}@media print{.report-print-actions{display:none!important}}
 
-.spotify-link{display:inline-flex;align-items:center;gap:7px;padding:9px 11px;border:1px solid #bad8c4;border-radius:9px;background:#ecf7ef;color:#17442b;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap}.spotify-link:hover{background:#d9f0e0}.spotify-link svg{width:20px;height:20px;flex-shrink:0}
+.spotify-link,.shoe-link{display:inline-flex;align-items:center;gap:7px;padding:9px 11px;border:1px solid #bad8c4;border-radius:9px;background:#ecf7ef;color:#17442b;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap}.spotify-link:hover{background:#d9f0e0}.spotify-link svg,.shoe-link svg{width:20px;height:20px;flex-shrink:0}
+
+.shoe-link{background:#fff2e9;border-color:#efc5a8;color:#914019}.shoe-link:hover{background:#ffe5d1}

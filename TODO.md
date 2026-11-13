@@ -141,3 +141,10 @@ Publicação, CI e download 1.8 concluídos. O sucesso de implantação não acr
 - [x] Teste sintético falhou antes da implementação e passou depois; ficha preservada ao navegar entre telas.
 - [x] 207 testes/build/E2E Chromium aprovados; site privado e download atualizados e conferidos. Diagnóstico WebKit continua não aprovado.
 - [ ] Reprodução no aplicativo Spotify/aparelhos reais não homologada; offline iPhone permanece pendente do item anterior.
+
+## Item — botão Ver tênis 1.8.3
+
+- [x] Botão com ícone de calçado e link exato informado, ao lado do Spotify no cabeçalho das cinco telas.
+- [x] Teste UI observado falhando antes e passando depois; nova aba, sem referência de origem e ficha preservada.
+- [ ] Encerrar suite/build/E2E, publicar site privado e verificar download.
+- [ ] Disponibilidade do produto, redirecionamento/app Shopee e compra não homologados; offline iPhone permanece pendente.

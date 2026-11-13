@@ -221,3 +221,9 @@ Site privado retornou succeeded: deployment appgdep_6af790bec2e881918a051d67b55e
 Release html-b21806cbbec5, download HTTP 200/attachment, 13.945.353 bytes; SHA-256 local e remoto: 2619df09f3afcc1a6206eedfd6b7bc6bec0f2609416f0c858beec63b5f92c8a9. URL: https://github.com/ebarroso12/hakunatriagem/releases/download/html-b21806cbbec5/Triagem-Hakunas-v1.8.2.html .
 
 Próximo item permanece o offline iPhone e homologação física. Esta entrega só adiciona o link Spotify e não resolve essa limitação.
+
+## Botão Ver tênis 1.8.3
+
+Pedido: outro botão de cabeçalho para https://s.shopee.com.br/8VAU6VZWKn . Implementado Ver tênis, ícone SVG local e estilo laranja ao lado do Spotify, nas cinco telas. Link exato, nova aba, noopener/noreferrer e no-referrer; sem iframe, script da loja, checkout, requisição automática ou envio de ficha.
+
+Teste UI falhou antes da implementação e passou depois; os dois links e o registro sintético são preservados ao navegar. 208/208 testes locais aprovados, build/sintaxe/diff aprovados. E2E Chromium ampliado para o link/atributos e layouts existentes; resultado remoto/publicação pendentes nesta etapa. Produto real, preço, redirecionamento, app Shopee e compra não testados. Não houve alteração de critérios ou da limitação offline iPhone.
